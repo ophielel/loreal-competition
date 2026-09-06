@@ -13,12 +13,16 @@ async function api(path, body) {
 }
 const priorityClass = (priority) => priority==='高'?'red':priority==='中'?'gold':'neutral';
 const pill = (text, color='neutral') => `<span class="pill ${color}">${e(text)}</span>`;
+const riskMeta = (r) => {
+  const p=(r.level==='高'?'高':r.level==='中'?'中':'')+'关注';
+  return `<div class="risk-title">${e(r.title)} ${pill(p,priorityClass(r.level))}</div>`;
+};
 function renderList() {
   const query=$('#search').value.trim().toLowerCase();
   const items=state.overview.sessions.filter(s=>`${s.id} ${s.buyer} ${s.first}`.toLowerCase().includes(query))
     .filter(s=>state.filter==='high'?s.priority==='高':state.filter==='order'?['订单服务','退款打款','补发换货','售后退货'].includes(s.intent):true);
   $('#list-count').textContent=items.length;
-  $('#session-list').innerHTML=items.map(s=>`<button class="session-item ${s.id===state.id?'active':''}" data-session="${e(s.id)}" aria-pressed="${s.id===state.id}"><span class="avatar">${e(s.buyer[0])}</span><span class="session-body"><span class="session-title">${e(s.buyer)}<time>${e(s.time.slice(5,10))}</time></span><span class="session-preview">${e(s.first)}</span><span class="session-tags">${pill(s.intent)}${s.priority==='高'?pill('高关注','red'):''}<span class="muted small">${e(s.id)}</span></span></span></button>`).join('') || '<p class="empty">没有匹配的会话。试试其他关键词或筛选。</p>';
+  $('#session-list').innerHTML=items.map(s=>`<button class="session-item ${s.id===state.id?'active':''}" data-session="${e(s.id)}" aria-pressed="${s.id===state.id}"><span class="session-body"><span class="session-title">${e(s.buyer)}<time>${e(s.time.slice(5,10))}</time></span><span class="session-preview">${e(s.first)}</span><span class="session-tags">${pill(s.intent)}${s.priority==='高'?pill('高关注','red'):''}</span></span></button>`).join('') || '<p class="empty">没有匹配的会话。试试其他关键词或筛选。</p>';
 }
 async function loadSession(id, cursor) {
   if(state.data) state.drafts[state.id]=$('#reply').value;
@@ -41,13 +45,13 @@ function renderConversation() {
   $('#buyer-avatar').textContent=s.buyer[0];
   $('#buyer-meta').textContent=`${s.id} · ${state.total} 条历史消息 · 脱敏昵称`;
   const o=s.orders[0];
-  $('#order-card').innerHTML=o ? `<div class="product-icon">▯</div><div><h3>${e(o.product)}</h3><p>订单 ${e(o.id)}</p><p>${e(o.carrier||'物流待核实')} · ${e(o.source)}</p></div><div class="amount">¥${Number(o.amount).toFixed(2)}</div>` : '<div class="product-icon">◇</div><div><h3>当前时点暂无可见订单</h3><p>咨询前置场景也能分析，不补造订单信息。</p></div>';
+  $('#order-card').innerHTML=o ? `<div><h3>${e(o.product)}</h3><p>订单 ${e(o.id)} · ${e(o.carrier||'物流待核实')} · ${e(o.source)}</p></div><div class="amount">¥${Number(o.amount).toFixed(2)}</div>` : '<div><h3>当前时点暂无可见订单</h3><p>咨询前置场景也能分析，不补造订单信息。</p></div>';
   $('#cursor').max=state.total; $('#cursor').value=Math.min(state.cursor,state.total);
   $('#replay-mode').textContent=s.archived?'归档模式':'历史回放';
   $('#cursor-label').textContent=s.archived?'表格最终记录':`${state.cursor} / ${state.total} 条`;
   $('#prev').disabled=state.cursor<=1; $('#next').disabled=state.cursor>=state.total;
-  $('#time-notice').textContent=s.archived?'▣ 归档快照：包含聊天结束后创建的工单，不代表当时已知信息。':`◷ 当前时点 ${s.cutoff} · 仅分析此前已出现的信息`;
-  $('#messages').innerHTML=s.messages.map(m=>`<article class="chat-row ${m.role==='客服'?'agent':''}" id="message-${e(m.id)}"><div class="chat-label">${m.role==='客服'?'测试客服':e(s.buyer)} · ${e(m.time.slice(11))} · #${m.seq}</div><div class="bubble">${e(m.text)}${m.type==='图片'?`<div class="image-placeholder">▧ 买家提及图片 · 原文件未提供<small>不进行图片识别或凭空核实内容</small></div>`:''}</div></article>`).join('');
+  $('#time-notice').textContent=s.archived?'归档快照：包含聊天结束后创建的工单':`当前时点 ${s.cutoff}`;
+  $('#messages').innerHTML=s.messages.map(m=>`<article class="chat-row ${m.role==='客服'?'agent':''}" id="message-${e(m.id)}"><div class="chat-label">${m.role==='客服'?'测试客服':e(s.buyer)} · ${e(m.time.slice(11))}</div><div class="bubble">${e(m.text)}${m.type==='图片'?`<div class="image-placeholder">▧ 买家提及图片 · 原文件未提供<small>不进行图片识别或凭空核实内容</small></div>`:''}</div></article>`).join('');
   for(const text of state.sent[state.id]||[]) appendSimulated(text);
   $('#messages').scrollTop=$('#messages').scrollHeight;
 }
@@ -62,8 +66,8 @@ function renderCopilot() {
   $('#model-button').textContent=state.modelBusy?'正在分析…':'Qwen 分析 ↗';
   if(state.tab==='journey') return renderJourney(s);
   if(state.tab==='evidence') return renderEvidence(a,s);
-  const risks=a.risks.map(r=>`<section class="risk-card ${r.level==='高'?'high':''}"><div class="risk-title">${r.level==='高'?'!':'◇'} ${e(r.title)} ${pill(r.level+'关注',priorityClass(r.level))}</div><p>${e(r.detail)}</p>${r.evidence_ids.filter(id=>s.messages.some(m=>m.id===id)).map(id=>`<button class="evidence-link" data-evidence="${e(id)}">查看原话 ↗</button>`).slice(0,2).join(' ')}</section>`).join('');
-  $('#copilot-content').innerHTML=`${a.model_error?`<div class="error-box">${e(a.model_error)}</div>`:''}<section class="insight-card"><div class="section-heading"><h3>此刻，消费者需要什么</h3>${pill(a.priority+'关注',priorityClass(a.priority))}</div><div class="summary-tags">${pill(a.intent,'green')}${pill('情绪 · '+a.emotion,a.emotion==='负向'?'red':a.emotion==='焦急'?'gold':'neutral')}</div><p>${e(a.summary)}</p><div class="emotion-chart" aria-label="买家消息情绪变化">${a.trend.map(t=>`<div class="emotion-step"><div class="emotion-bar level-${t.level}"></div><small>#${t.seq} ${e(t.emotion)}</small></div>`).join('')}</div><p class="footnote">情绪为启发式线索，不代表心理诊断。</p></section><div class="section-heading"><h3>需要留意</h3><span class="muted">${a.risks.length} 项提示</span></div>${risks||'<section class="insight-card"><p>当前未触发规则风险，仍需结合原文判断。</p></section>'}<section class="reply-card"><div class="section-heading"><h3>建议怎么回应</h3><span class="muted">可编辑草稿</span></div><p>${e(a.reply)}</p><button id="adopt-reply">采用建议 ↙</button></section><div class="action-row"><h3>${e(a.action)}</h3><button id="create-task" class="primary">创建跟进</button></div><p class="guard">${e(a.guard)}</p><p class="guard">${e(a.uncertainty)}</p>`;
+  const risks=a.risks.map(r=>`<section class="risk-card ${r.level==='高'?'high':''}">${riskMeta(r)}<p>${e(r.detail)}</p>${r.evidence_ids.filter(id=>s.messages.some(m=>m.id===id)).map(id=>`<button class="evidence-link" data-evidence="${e(id)}">查看原话 ↗</button>`).slice(0,2).join(' ')}</section>`).join('');
+  $('#copilot-content').innerHTML=`${a.model_error?`<div class="error-box">${e(a.model_error)}</div>`:''}<section class="insight-card"><div class="section-heading"><h3>此刻，消费者需要什么</h3></div><div class="summary-tags">${pill(a.intent,'green')}${pill('情绪 · '+a.emotion,a.emotion==='负向'?'red':a.emotion==='焦急'?'gold':'neutral')}</div><p>${e(a.summary)}</p><div class="emotion-chart" aria-label="买家消息情绪变化">${a.trend.map(t=>`<div class="emotion-step"><div class="emotion-bar level-${t.level}"></div><small>#${t.seq} ${e(t.emotion)}</small></div>`).join('')}</div><p class="footnote">情绪为启发式线索，不代表心理诊断。</p></section><div class="section-heading"><h3>需要留意</h3><span class="muted">${a.risks.length} 项提示</span></div>${risks||'<section class="insight-card"><p>当前未触发规则风险，仍需结合原文判断。</p></section>'}<section class="reply-card"><div class="section-heading"><h3>建议怎么回应</h3></div><p>${e(a.reply)}</p><button id="adopt-reply">采用建议 ↙</button></section><div class="action-row"><h3>${e(a.action)}</h3><button id="create-task" class="primary">创建跟进</button></div><p class="guard">${e(a.guard)}</p><p class="guard">${e(a.uncertainty)}</p>`;
 }
 function renderJourney(s) {
   const events=[];
@@ -78,10 +82,10 @@ function renderJourney(s) {
     if(t.completed) events.push({time:t.completed,title:'工单完成',detail:t.id,source:t.source});
   });
   events.sort((a,b)=>a.time.localeCompare(b.time));
-  $('#copilot-content').innerHTML=`<div class="section-heading"><h3>一条可追溯的服务路径</h3>${pill(events.length+' 个节点','green')}</div><p class="muted">${s.archived?'归档模式：展示聊天与事后工单的完整路径。':'聊天、订单、工单按时间对齐。工单晚于当前时点时暂不显示。'}</p>${s.archived?s.tickets.map(t=>`<section class="insight-card"><h3>${e(t.kind)} ${pill(t.status,'gold')}</h3><p>${e(t.id)} · ${e(t.source)}</p><p>${e(t.fields['售后原因']||t.fields['问题类型']||t.fields['退款问题类型']||t.fields['症状描述']||t.fields['退货原因']||'详见原始表格')}</p></section>`).join(''):''}<div class="timeline">${events.map(v=>`<div class="timeline-item"><time>${e(v.time)}</time><h3>${e(v.title)}</h3><p>${e(v.detail)}</p><p>${e(v.source)}</p>${v.id?`<button class="evidence-link" data-evidence="${e(v.id)}">定位消息 ↗</button>`:''}</div>`).join('')}</div><div class="insight-card"><h3>数据边界</h3><p>无状态变更日志，无法还原订单与进行中工单的历史状态。脱敏昵称不能支持确定性的跨会话归并。</p></div>`;
+  $('#copilot-content').innerHTML=`<div class="section-heading"><h3>一条可追溯的服务路径</h3><span class="muted">${events.length} 个节点</span></div><p class="muted">${s.archived?'归档模式：展示聊天与事后工单的完整路径。':'聊天、订单、工单按时间对齐。工单晚于当前时点时暂不显示。'}</p>${s.archived?s.tickets.map(t=>`<section class="insight-card"><h3>${e(t.kind)} ${pill(t.status,'gold')}</h3><p>${e(t.id)} · ${e(t.source)}</p><p>${e(t.fields['售后原因']||t.fields['问题类型']||t.fields['退款问题类型']||t.fields['症状描述']||t.fields['退货原因']||'详见原始表格')}</p></section>`).join(''):''}<div class="timeline">${events.map(v=>`<div class="timeline-item"><time>${e(v.time)}</time><h3>${e(v.title)}</h3><p>${e(v.detail)}</p><p>${e(v.source)}</p>${v.id?`<button class="evidence-link" data-evidence="${e(v.id)}">定位消息 ↗</button>`:''}</div>`).join('')}</div><div class="insight-card"><h3>数据边界</h3><p>无状态变更日志，无法还原订单与进行中工单的历史状态。脱敏昵称不能支持确定性的跨会话归并。</p></div>`;
 }
 function renderEvidence(a,s) {
-  $('#copilot-content').innerHTML=`<div class="section-heading"><h3>Agent 工作流</h3>${pill(a.mode==='qwen'?'Qwen + 规则':'本地规则','green')}</div>${a.trace.map((v,i)=>`<div class="trace-step"><span>${i+1}</span><div><h3>${e(v.step)}</h3><p>${e(v.detail)}</p></div></div>`).join('')}<section class="insight-card"><h3>事实与判断分开呈现</h3><p>下方是直接引用的原始消息。意图、情绪和风险属于推断，需要人工复核。${a.mode==='qwen'?'模型引用已通过 ID 存在性检查，语义是否充分仍需审核。':''}</p></section><h3>买家原话 · ${a.evidence.length} 条</h3>${a.evidence.map(v=>`<div class="evidence-card"><small>${e(v.source)} · 消息 #${v.seq}${a.evidence_ids?.includes(v.id)?' · 模型已引用':''}</small><p>${e(v.text)}</p><button class="evidence-link" data-evidence="${e(v.id)}">回到对话 ↗</button></div>`).join('')}<p class="footnote">工作簿 SHA-256</p><p class="muted source-id">${e(state.overview.meta.sha256)}</p>`;
+  $('#copilot-content').innerHTML=`<div class="section-heading"><h3>Agent 工作流</h3><span class="muted">${a.mode==='qwen'?'Qwen + 规则':'本地规则'}</span></div>${a.trace.map((v,i)=>`<div class="trace-step"><span>${i+1}</span><div><h3>${e(v.step)}</h3><p>${e(v.detail)}</p></div></div>`).join('')}<section class="insight-card"><h3>事实与判断分开呈现</h3><p>下方是直接引用的原始消息。意图、情绪和风险属于推断，需要人工复核。${a.mode==='qwen'?'模型引用已通过 ID 存在性检查，语义是否充分仍需审核。':''}</p></section><h3>买家原话 · ${a.evidence.length} 条</h3>${a.evidence.map(v=>`<div class="evidence-card"><small>${e(v.source)} · 消息 #${v.seq}${a.evidence_ids?.includes(v.id)?' · 模型已引用':''}</small><p>${e(v.text)}</p><button class="evidence-link" data-evidence="${e(v.id)}">回到对话 ↗</button></div>`).join('')}<p class="footnote">工作簿 SHA-256</p><p class="muted source-id">${e(state.overview.meta.sha256)}</p>`;
 }
 async function switchView(view) {
   state.view=view;
