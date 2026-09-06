@@ -31,20 +31,24 @@ class ApiTests(unittest.TestCase):
         with self.assertRaises(HTTPError) as cm:
             urlopen(self.url + '/api/session?id=S00010&cursor=10000')
         self.assertEqual(cm.exception.code, 400)
+        cm.exception.close()
 
     def test_source_files_not_served(self):
         with self.assertRaises(HTTPError) as cm:
             urlopen(self.url + '/server.py')
         self.assertEqual(cm.exception.code, 404)
+        cm.exception.close()
 
     def test_cross_origin_mutation_denied(self):
         req = Request(self.url+'/api/tasks', b'{}', headers={'Content-Type':'application/json', 'Origin':'https://example.com'})
         with self.assertRaises(HTTPError) as cm:
             urlopen(req)
         self.assertEqual(cm.exception.code, 403)
+        cm.exception.close()
 
     def test_invalid_json_returns_400(self):
         req = Request(self.url+'/api/tasks', b'{oops', headers={'Content-Type':'application/json'})
         with self.assertRaises(HTTPError) as cm:
             urlopen(req)
         self.assertEqual(cm.exception.code, 400)
+        cm.exception.close()

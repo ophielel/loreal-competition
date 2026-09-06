@@ -8,7 +8,7 @@ from copy import deepcopy
 from urllib.request import Request, urlopen
 from urllib.parse import urlparse
 
-from src.engine import INTENTS, snapshot
+from src.engine import INTENTS, POLICIES, snapshot
 
 CACHE = {}
 LOCK = threading.Lock()
@@ -67,10 +67,17 @@ def enhance(session, cursor, baseline):
                           {m['id'] for m in s['messages'] if m['role'] == '买家'})
         extra = {**result, 'mode': 'qwen', 'model': model, 'model_latency_ms': round((time.perf_counter() - started) * 1000),
                  'usage': raw.get('usage', {}), 'call_tokens': raw.get('usage', {}).get('total_tokens', 0), 'cache_hit': False}
+        health_gate = any(r['title'] == '使用不适需优先关注' for r in baseline['risks'])
+        routing = '不良反应' if health_gate else result['intent']
+        if routing in POLICIES:
+            extra['action'], extra['guard'], _ = POLICIES[routing]
+        extra['trace'] = baseline['trace'][:-1] + [{'step': 'Qwen 语义分析', 'detail': 'JSON 与引用 ID 校验通过；语义仍需人工审核'}] + baseline['trace'][-1:]
         # Hard safety gates from rules are never removed by the model.
         if result['intent'] == '不良反应':
             extra['priority'] = '高'
             extra['guard'] = '模型识别到使用不适，需转人工专员复核；不作诊断与赔偿承诺。'
+            if not health_gate:
+                extra['risks'] = baseline['risks'] + [{'title': '模型提示使用不适', 'detail': '语义推断，需核对引用并转专员确认。', 'level': '高', 'evidence_ids': result['evidence_ids']}]
         with LOCK:
             if len(CACHE) >= 256:
                 CACHE.pop(next(iter(CACHE)))

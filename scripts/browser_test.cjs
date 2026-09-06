@@ -9,6 +9,7 @@ const root = path.resolve(__dirname, '..');
 const out = path.join(root, 'deliverables');
 const base = process.env.DEMO_URL || 'http://127.0.0.1:8765';
 const record = process.argv.includes('--record');
+const taskTitle = record ? '录屏演示：核实使用不适并跟进' : '演示：核实使用不适并跟进';
 const wait = async (page, ms=3500) => { if (record) await page.waitForTimeout(ms); };
 
 (async()=>{
@@ -57,13 +58,13 @@ const wait = async (page, ms=3500) => { if (record) await page.waitForTimeout(ms
   await page.getByRole('button',{name:'模拟发送 ↗'}).click();
   assert.equal(await page.locator('.simulated').count(),1);results.push('editable suggested response and local simulated send');await wait(page);
   await page.getByRole('button',{name:'创建跟进',exact:true}).click();await wait(page);
-  await page.getByLabel('任务名称',{exact:true}).fill('演示：核实使用不适并跟进');
+  await page.getByLabel('任务名称',{exact:true}).fill(taskTitle);
   await page.getByLabel('核实说明',{exact:true}).fill('依据 S00010 可见消息与工单，转售后专员核实；不重复索取买家已提供的信息。');await wait(page);
   await page.getByRole('button',{name:'确认创建本地任务'}).click();
   await page.getByText('已创建本地跟进任务；相同任务自动去重',{exact:true}).waitFor();
   await page.getByRole('button',{name:'跟进任务',exact:true}).click();
-  await page.getByRole('heading',{name:/演示：核实使用不适并跟进/}).waitFor();await wait(page);
-  const task=page.locator('.task-item').filter({hasText:'演示：核实使用不适并跟进'});
+  await page.getByRole('heading',{name:new RegExp(taskTitle)}).waitFor();await wait(page);
+  const task=page.locator('.task-item').filter({hasText:taskTitle});
   if(await task.getByRole('button',{name:'标记完成'}).count())await task.getByRole('button',{name:'标记完成'}).click();
   await task.getByText('已完成',{exact:true}).waitFor();results.push('task creation and completion persist');
   await page.screenshot({path:path.join(out,'05-tasks.png')});await wait(page,5000);
@@ -93,8 +94,9 @@ const wait = async (page, ms=3500) => { if (record) await page.waitForTimeout(ms
   assert.ok(await page.evaluate(()=>document.activeElement!==document.body));results.push('keyboard focus available');
   assert.deepEqual(errors,[]);
   const video=record?page.video():null;
-  await context.close();await browser.close();
+  await context.close();
   if(video) await video.saveAs(path.join(out,'demo.webm'));
+  await browser.close();
   const report={passed:results.length,checks:results,browser:'Microsoft Edge / Playwright',console_errors:errors,recorded:record};
   fs.writeFileSync(path.join(out,'browser-checks.json'),JSON.stringify(report,null,2));
   console.log(JSON.stringify(report,null,2));

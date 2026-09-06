@@ -1,0 +1,11 @@
+{
+  "name": "zhiwei-beauty-copilot",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Browser validation and demo recording; application runtime only needs Python",
+  "scripts": {
+    "test": "node scripts/browser_test.cjs",
+    "record": "node scripts/browser_test.cjs --record"
+  },
+  "devDependencies": { "playwright": "1.62.1" }
+}
