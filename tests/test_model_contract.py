@@ -70,6 +70,12 @@ class ValidatorContractTests(unittest.TestCase):
             with self.subTest(ids=ids), self.assertRaises(ValueError):
                 validate(response(intent_evidence_ids=ids), {'b1', 's1'}, buyer_ids={'b1'})
 
+    def test_intent_evidence_must_be_visible_even_if_buyer_inventory_is_broader(self):
+        # A caller may know buyer roles across a whole session; visibility still wins.
+        with self.assertRaises(ValueError):
+            validate(response(intent_evidence_ids=['future']), {'b1'},
+                     buyer_ids={'b1', 'future'})
+
 
 class HybridContractTests(unittest.TestCase):
     def setUp(self):

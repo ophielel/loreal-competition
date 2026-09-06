@@ -57,7 +57,7 @@ def validate(result, allowed, buyer_ids=None):
     if not any(i in buyer_ids for i in ids):
         raise ValueError('Buyer evidence required')
     intent_ids = result.get('intent_evidence_ids', [i for i in ids if i in buyer_ids])
-    if not isinstance(intent_ids, list) or not intent_ids or not all(isinstance(i, str) and i in buyer_ids for i in intent_ids):
+    if not isinstance(intent_ids, list) or not intent_ids or not all(isinstance(i, str) and i in allowed and i in buyer_ids for i in intent_ids):
         raise ValueError('Unsupported intent evidence')
     result['intent_evidence_ids'] = list(dict.fromkeys(intent_ids))
     result['evidence_ids'] = list(dict.fromkeys(ids))
