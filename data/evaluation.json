@@ -1,0 +1,277 @@
+{
+  "method": "首条消息预测；全量同源 MOCK 诊断评估；规则未读取标签，不是独立留出集",
+  "samples": 138,
+  "accuracy": 0.7898550724637681,
+  "macro_f1": 0.8561047989361882,
+  "by_class": [
+    {
+      "label": "不良反应",
+      "support": 10,
+      "correct": 9,
+      "recall": 0.9,
+      "precision": 0.9,
+      "f1": 0.9
+    },
+    {
+      "label": "产品咨询",
+      "support": 25,
+      "correct": 9,
+      "recall": 0.36,
+      "precision": 0.9,
+      "f1": 0.5142857142857143
+    },
+    {
+      "label": "会员服务",
+      "support": 3,
+      "correct": 3,
+      "recall": 1.0,
+      "precision": 1.0,
+      "f1": 1.0
+    },
+    {
+      "label": "其他服务",
+      "support": 3,
+      "correct": 2,
+      "recall": 0.6666666666666666,
+      "precision": 1.0,
+      "f1": 0.8
+    },
+    {
+      "label": "售后退货",
+      "support": 18,
+      "correct": 15,
+      "recall": 0.8333333333333334,
+      "precision": 0.8823529411764706,
+      "f1": 0.8571428571428571
+    },
+    {
+      "label": "物流异常",
+      "support": 15,
+      "correct": 12,
+      "recall": 0.8,
+      "precision": 1.0,
+      "f1": 0.888888888888889
+    },
+    {
+      "label": "物流服务",
+      "support": 8,
+      "correct": 7,
+      "recall": 0.875,
+      "precision": 0.7,
+      "f1": 0.7777777777777777
+    },
+    {
+      "label": "补发换货",
+      "support": 21,
+      "correct": 20,
+      "recall": 0.9523809523809523,
+      "precision": 1.0,
+      "f1": 0.975609756097561
+    },
+    {
+      "label": "订单服务",
+      "support": 22,
+      "correct": 22,
+      "recall": 1.0,
+      "precision": 0.9565217391304348,
+      "f1": 0.9777777777777777
+    },
+    {
+      "label": "退款打款",
+      "support": 13,
+      "correct": 10,
+      "recall": 0.7692307692307693,
+      "precision": 1.0,
+      "f1": 0.8695652173913044
+    }
+  ],
+  "initial_baseline_accuracy": 0.42028985507246375,
+  "full_conversation_accuracy": 0.9202898550724637,
+  "abstentions": 21,
+  "latency_mean_ms": 0.044318114490032305,
+  "latency_p95_ms": 0.041399995097890496,
+  "errors": [
+    {
+      "id": "S00002",
+      "label": "产品咨询",
+      "prediction": "待确认",
+      "correct": false
+    },
+    {
+      "id": "S00013",
+      "label": "产品咨询",
+      "prediction": "待确认",
+      "correct": false
+    },
+    {
+      "id": "S00014",
+      "label": "物流服务",
+      "prediction": "待确认",
+      "correct": false
+    },
+    {
+      "id": "S00019",
+      "label": "产品咨询",
+      "prediction": "待确认",
+      "correct": false
+    },
+    {
+      "id": "S00022",
+      "label": "产品咨询",
+      "prediction": "待确认",
+      "correct": false
+    },
+    {
+      "id": "S00025",
+      "label": "产品咨询",
+      "prediction": "待确认",
+      "correct": false
+    },
+    {
+      "id": "S00028",
+      "label": "物流异常",
+      "prediction": "待确认",
+      "correct": false
+    },
+    {
+      "id": "S00036",
+      "label": "产品咨询",
+      "prediction": "待确认",
+      "correct": false
+    },
+    {
+      "id": "S00046",
+      "label": "退款打款",
+      "prediction": "售后退货",
+      "correct": false
+    },
+    {
+      "id": "S00063",
+      "label": "物流异常",
+      "prediction": "物流服务",
+      "correct": false
+    },
+    {
+      "id": "S00067",
+      "label": "产品咨询",
+      "prediction": "待确认",
+      "correct": false
+    },
+    {
+      "id": "S00069",
+      "label": "产品咨询",
+      "prediction": "待确认",
+      "correct": false
+    },
+    {
+      "id": "S00073",
+      "label": "产品咨询",
+      "prediction": "待确认",
+      "correct": false
+    },
+    {
+      "id": "S00075",
+      "label": "物流异常",
+      "prediction": "物流服务",
+      "correct": false
+    },
+    {
+      "id": "S00078",
+      "label": "售后退货",
+      "prediction": "待确认",
+      "correct": false
+    },
+    {
+      "id": "S00080",
+      "label": "产品咨询",
+      "prediction": "待确认",
+      "correct": false
+    },
+    {
+      "id": "S00083",
+      "label": "产品咨询",
+      "prediction": "待确认",
+      "correct": false
+    },
+    {
+      "id": "S00086",
+      "label": "产品咨询",
+      "prediction": "待确认",
+      "correct": false
+    },
+    {
+      "id": "S00087",
+      "label": "补发换货",
+      "prediction": "订单服务",
+      "correct": false
+    },
+    {
+      "id": "S00089",
+      "label": "不良反应",
+      "prediction": "产品咨询",
+      "correct": false
+    },
+    {
+      "id": "S00091",
+      "label": "产品咨询",
+      "prediction": "待确认",
+      "correct": false
+    },
+    {
+      "id": "S00109",
+      "label": "产品咨询",
+      "prediction": "售后退货",
+      "correct": false
+    },
+    {
+      "id": "S00130",
+      "label": "其他服务",
+      "prediction": "待确认",
+      "correct": false
+    },
+    {
+      "id": "S00140",
+      "label": "产品咨询",
+      "prediction": "待确认",
+      "correct": false
+    },
+    {
+      "id": "S00169",
+      "label": "产品咨询",
+      "prediction": "待确认",
+      "correct": false
+    },
+    {
+      "id": "S00200",
+      "label": "退款打款",
+      "prediction": "待确认",
+      "correct": false
+    },
+    {
+      "id": "S00223",
+      "label": "售后退货",
+      "prediction": "物流服务",
+      "correct": false
+    },
+    {
+      "id": "S00232",
+      "label": "售后退货",
+      "prediction": "不良反应",
+      "correct": false
+    },
+    {
+      "id": "S00336",
+      "label": "退款打款",
+      "prediction": "待确认",
+      "correct": false
+    }
+  ],
+  "model_evaluated": false,
+  "limitations": [
+    "官方数据为模板化虚构样本",
+    "无独立测试集",
+    "无情绪和风险金标",
+    "无真实业务 A/B 结果",
+    "未进行在线大模型评估"
+  ]
+}

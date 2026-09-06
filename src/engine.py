@@ -17,6 +17,28 @@ INTENTS = [
 ]
 NEGATIVE = ['投诉', '曝光', '差评', '骗人', '生气', '无语', '气死', '太差', '失望', '12315']
 URGENT = ['急', '尽快', '还没', '多久', '一直', '催', '到底', '迟迟', '等了']
+PATTERNS = [
+    ('不良反应', r'过敏|红肿|脸肿|医院|就医|刺痒|发红|刺痛|爆痘|起.*疹|瘙痒|闷痘'),
+    ('退款打款', r'补差|少退|漏退|报销|少了[\d.]+块|售后.*关|钱退不出|线下.*退|打款'),
+    ('订单服务', r'尾款|预售|发票|降价|直播|主播|退款.*(到|进度|银行)|原路退回'),
+    ('售后退货', r'退货|无理由|仅退款|空包|拒收|能退|想退|假货'),
+    ('补发换货', r'漏发|少发|补发|换货|错发|发错|泵头|加赠|赠品.*(没|少|漏)|买的.*发来|拍的是.*收到|色差'),
+    ('物流异常', r'没收到|未收到|不动|停滞|丢件|丢了|破损|碎了|少件|拦截|改址|地址填错|里面少了|两件.*一件|签收了'),
+    ('会员服务', r'积分|会员等级|会员权益'),
+    ('其他服务', r'夸夸|好评|回访'),
+    ('物流服务', r'物流|快递|包裹|到哪|什么时候到|发货|单号'),
+    ('订单服务', r'取消订单|付款|订单'),
+    ('产品咨询', r'精华|面霜|色号|肤质|敏感肌|孕妇|成分|怎么用|正品|优惠|赠品|套装|区别|防晒|推荐|假的|眼影|唇|适合|顺序|酒精|香精')
+]
+
+
+def infer_intent(buyers):
+    # Infer the first substantive request instead of letting a later “谢谢/退款” erase it.
+    for message in buyers:
+        for label, pattern in PATTERNS:
+            if re.search(pattern, message['text']):
+                return label
+    return '待确认'
 POLICIES = {
     '不良反应': ('优先转专员核实', '记录买家自述、不适时间与已采取措施；不作诊断，不承诺医疗赔偿。', '看到您反馈使用后不适，我理解您的担心。我会优先转交售后专员，核实您已提供的信息，避免让您重复描述。'),
     '退款打款': ('核实退款与打款记录', '对齐原订单、退款编号和实际进度，重复付款前须人工复核。', '理解您一直等待退款的着急。我会先核对订单及退款记录，确认目前进度后给您明确反馈。'),
@@ -30,6 +52,11 @@ def snapshot(session, cursor):
     s = deepcopy(session)
     s.pop('label', None)
     s.pop('minor_label', None)
+    if cursor == len(s['messages']) + 1:
+        s['archived'] = True
+        s['cutoff'] = '归档快照（表格最终记录；非历史回放）'
+        return s
+    s['archived'] = False
     s['messages'] = s['messages'][:max(0, cursor)]
     cutoff = s['messages'][-1]['time'] if s['messages'] else ''
     s['cutoff'] = cutoff
@@ -69,14 +96,14 @@ def analyze(session, cursor):
     s = snapshot(session, cursor)
     buyers = [m for m in s['messages'] if m['role'] == '买家']
     text = '\n'.join(m['text'] for m in buyers)
-    intent = next((name for name, words in INTENTS if any(w in text for w in words)), '待确认')
+    intent = infer_intent(buyers)
     trend = [{'seq': m['seq'], 'emotion': emotion(m['text'])[0], 'level': emotion(m['text'])[1]} for m in buyers]
     current = trend[-1]['emotion'] if trend else '待判断'
     risks = []
     def risk(title, detail, level, keywords):
         evidence = [m['id'] for m in buyers if any(w in m['text'] for w in keywords)]
         risks.append({'title': title, 'detail': detail, 'level': level, 'evidence_ids': evidence})
-    if intent == '不良反应':
+    if re.search(PATTERNS[0][1], text):
         risk('使用不适需优先关注', '买家自述，仅作服务分流依据；转人工专员核实。', '高', INTENTS[0][1])
     if any(w in text for w in NEGATIVE):
         risk('投诉或负向表达', '存在投诉相关表达，不能据此断定投诉已经发生。', '高', NEGATIVE)
@@ -87,7 +114,8 @@ def analyze(session, cursor):
     if s['tickets']:
         risks.append({'title': '存在关联工单', 'detail': '继续操作前核对原工单，避免重复创建或重复赔付。', 'level': '中', 'evidence_ids': [t['id'] for t in s['tickets']]})
     priority = '高' if any(r['level'] == '高' for r in risks) else '中' if risks or current == '焦急' else '普通'
-    action, guard, reply = POLICIES.get(intent, ('核实需求并提供信息', '先澄清具体问题；产品功效、活动规则与发货时效应以经审核资料为准。', '收到您的咨询。我会先确认您的具体需求和相关信息，再为您提供准确的说明。'))
+    routing = '不良反应' if any(r['title'] == '使用不适需优先关注' for r in risks) else intent
+    action, guard, reply = POLICIES.get(routing, ('核实需求并提供信息', '先澄清具体问题；产品功效、活动规则与发货时效应以经审核资料为准。', '收到您的咨询。我会先确认您的具体需求和相关信息，再为您提供准确的说明。'))
     evidence = [{'id': m['id'], 'source': m.get('source', ''), 'text': m['text'], 'seq': m['seq']} for m in buyers]
     summary = f"当前可见 {len(s['messages'])} 条消息，{len(s['orders'])} 笔订单，{len(s['tickets'])} 张工单。"
     if buyers:

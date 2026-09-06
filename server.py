@@ -38,7 +38,7 @@ class Handler(BaseHTTPRequestHandler):
         if sid not in SESSIONS:
             raise KeyError('会话不存在')
         s = SESSIONS[sid]
-        if cursor < 0 or cursor > len(s['messages']):
+        if cursor < 0 or cursor > len(s['messages']) + 1:
             raise ValueError('回放位置越界')
         return s
 
