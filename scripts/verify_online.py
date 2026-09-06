@@ -40,6 +40,7 @@ def verify(out):
             model.CACHE.clear()
             value = model.enhance(s, row['cursor'], baseline)
             assert ('model_error' not in value) == row['valid']
+            assert value.get('model_error_code') == row['hybrid_result'].get('model_error_code')
             for field in ('intent', 'model_intent', 'intent_source', 'priority', 'risks', 'reply', 'action', 'guard'):
                 assert value.get(field) == row['hybrid_result'].get(field), (row['id'], field)
         for scenario, methods in summary['scenarios'].items():
@@ -50,6 +51,7 @@ def verify(out):
         completion = sum(r['usage'].get('completion_tokens', 0) for r in rows)
         assert (prompt, completion) == (summary['prompt_tokens'], summary['completion_tokens'])
         assert estimate_cost(prompt, completion) == summary['estimated_list_price_cny']
+        assert calls == summary['model_responses']
     finally:
         model.urlopen = old_open
         model.CACHE.clear()
