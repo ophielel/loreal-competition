@@ -6,13 +6,13 @@
 
 Windows 双击 **start.cmd**，浏览器打开 http://127.0.0.1:8765 。需要 Python 3.11 或以上；运行 Demo 本身不需要安装第三方包。已附导入好的数据。
 
-也可以在项目目录运行：
+也可以直接运行：
 
 ```powershell
 python server.py --port 8765
 ```
 
-端口占用时改为 `python server.py --port 8766`，访问对应地址。命令行运行时按 Ctrl+C 关闭。启动脚本使用隐藏后台进程，日志在 data/server.log 和 data/server-error.log。
+端口占用时改为 `python server.py --port 8766`，访问对应地址。命令行运行时按 Ctrl+C 关闭。启动脚本使用隐藏后台进程，日志文件不会提交到仓库。
 
 ## 已实现
 
