@@ -196,6 +196,27 @@ function riskCardHtml(r, s) {
   </section>`;
 }
 
+function sourceLinkHtml(item) {
+  if (item.source_type === 'message') {
+    return `<button class="evidence-link" data-evidence="${e(item.source_id)}">原话 ↗</button>`;
+  }
+  return `<span class="source-tag">${e(item.source_type)} · ${e(item.source_id)}</span>`;
+}
+
+function serviceItemHtml(item) {
+  const facts = item.known_facts.map((v) => `<li>${e(v.text)} ${sourceLinkHtml(v)}</li>`).join('');
+  const handled = item.handled.map((v) => typeof v === 'string' ? `<li>${e(v)}</li>`
+    : `<li>${e(v.text)} ${sourceLinkHtml(v)}</li>`).join('');
+  return `<section class="service-item-card">
+    <div class="section-heading"><h3>当前服务事项</h3>${pill('时点内事实', 'green')}</div>
+    <dl><dt>当前诉求</dt><dd>${e(item.current_need)}</dd>
+      <dt>已知事实</dt><dd><ul>${facts || '<li>当前时点暂无结构化事实</li>'}</ul></dd>
+      <dt>待核实</dt><dd><ul>${item.to_verify.map((v) => `<li>${e(v)}</li>`).join('')}</ul></dd>
+      <dt>已有处理</dt><dd><ul>${handled}</ul></dd>
+      <dt>下一步</dt><dd>${e(item.next_step)}</dd></dl>
+  </section>`;
+}
+
 function renderInsight(a, s) {
   const risks = a.risks.map((r) => riskCardHtml(r, s)).join('');
   const emotionColor = a.emotion === '负向' ? 'red' : a.emotion === '焦急' ? 'gold' : 'neutral';
@@ -208,6 +229,7 @@ function renderInsight(a, s) {
     </div>`).join('');
   $('#copilot-content').innerHTML = `
     ${a.model_error ? `<div class="error-box">${e(a.model_error)}</div>` : ''}
+    ${serviceItemHtml(a.service_item)}
     <section class="insight-card">
       <div class="section-heading"><h3>即时洞察</h3></div>
       <div class="summary-tags">${pill(a.intent, 'green')}${pill('情绪 · ' + a.emotion, emotionColor)}</div>
@@ -217,8 +239,9 @@ function renderInsight(a, s) {
     <div class="section-heading"><h3>需要留意</h3><span class="muted">${a.risks.length} 项</span></div>
     ${risks || '<section class="insight-card"><p>当前未触发规则风险。</p></section>'}
     <section class="reply-card">
-      <div class="section-heading"><h3>建议回应</h3></div>
+      <div class="section-heading"><h3>建议回应</h3>${a.reply_guard?.blocked ? pill('已安全降级', 'gold') : ''}</div>
       <p>${e(a.reply)}</p>
+      ${a.reply_guard?.blocked ? `<small class="guard-reason">${e(a.reply_guard.reasons.join('；'))}</small>` : ''}
       <button id="adopt-reply">采用建议 ↙</button>
     </section>
     <div class="action-row"><h3>${e(a.action)}</h3><button id="create-task" class="primary">创建跟进</button></div>
@@ -282,6 +305,8 @@ function tasksViewHtml(tasks) {
 }
 
 function metricsViewHtml(v) {
+  const release = v.release_summary;
+  const challenge = release?.challenge_metrics;
   const table = v.by_class
     ? `<table><thead><tr><th>官方场景</th><th>样本</th><th>正确</th><th>召回率</th></tr></thead>
        <tbody>${v.by_class.map((c) => `<tr>
@@ -296,6 +321,13 @@ function metricsViewHtml(v) {
         <b>${v.accuracy == null ? '待评估' : (v.accuracy * 100).toFixed(1) + '%'}</b>
         <small>同源 MOCK 诊断集，非独立测试集</small></div>
     </div>
+    ${challenge ? `<section class="data-panel"><h3>独立 Challenge Set <span class="count">50</span></h3>
+      <p class="muted">人工编写语义边界集，与官方 138 会话分开；版本 ${e(release.version)}。</p>
+      <div class="summary-tags">${pill('Intent ' + (challenge.intent_accuracy*100).toFixed(1) + '%','green')}
+        ${pill('Risk Recall ' + (challenge.risk_recall*100).toFixed(1) + '%','green')}
+        ${pill('Evidence ' + (challenge.evidence_support_rate*100).toFixed(1) + '%','green')}
+        ${pill('Unsafe ' + (challenge.unsafe_commitment_recall*100).toFixed(1) + '%','green')}</div>
+    </section>` : ''}
     <section class="data-panel"><h3>各场景识别情况</h3>
       <p class="muted">场景标签只用于离线评估，不进入规则或模型输入。</p>${table}
     </section>`;
@@ -396,15 +428,24 @@ document.addEventListener('click', async (event) => {
   }
 });
 
-function sendReply() {
+async function sendReply() {
   const text = $('#reply').value.trim();
   if (!text) return toast('请先输入或采用一条回复建议');
-  (state.sent[state.id] ??= []).push(text);
-  appendSimulated(text);
-  $('#reply').value = '';
-  state.drafts[state.id] = '';
-  $('#messages').scrollTop = $('#messages').scrollHeight;
-  toast('已本地模拟发送，未联系任何消费者');
+  try {
+    const checked = await api('/api/reply/guard', { id: state.id, cursor: state.cursor, reply: text });
+    if (checked.blocked) {
+      $('#reply').value = checked.reply;
+      state.drafts[state.id] = checked.reply;
+      toast(`已拦截无依据承诺：${checked.reasons.join('；')}。请确认安全版本后再次发送`);
+      return;
+    }
+    (state.sent[state.id] ??= []).push(checked.reply);
+    appendSimulated(checked.reply);
+    $('#reply').value = '';
+    state.drafts[state.id] = '';
+    $('#messages').scrollTop = $('#messages').scrollHeight;
+    toast('已通过承诺检查并本地模拟发送，未联系任何消费者');
+  } catch (err) { toast(err.message); }
 }
 
 $('#search').addEventListener('input', renderList);

@@ -32,6 +32,9 @@ const wait = async (page, ms=3500) => { if (record) await page.waitForTimeout(ms
   await page.getByRole('searchbox').fill('S00010');
   assert.equal(await page.locator('.session-item').count(),1);results.push('session search works');await wait(page);
   await page.locator('[data-session="S00010"]').click();
+  await page.getByRole('heading',{name:'当前服务事项'}).waitFor();
+  assert.ok(await page.locator('.service-item-card').getByText('待核实',{exact:true}).count()>0);
+  results.push('time-aware service item card renders');
   await page.getByRole('button',{name:'下一条消息'}).click();
   await page.getByText('2 / 10 条',{exact:true}).waitFor();await wait(page);
   await page.getByRole('button',{name:'下一条消息'}).click();
@@ -53,8 +56,14 @@ const wait = async (page, ms=3500) => { if (record) await page.waitForTimeout(ms
   await page.screenshot({path:path.join(out,'04-evidence.png')});
   await page.getByRole('button',{name:'采用建议 ↙'}).click();
   assert.ok((await page.getByRole('textbox',{name:'回复草稿'}).inputValue()).length>20);
+  await page.getByRole('textbox',{name:'回复草稿'}).fill('已为您完成退款，明天一定到账。');
+  await page.getByRole('button',{name:'模拟发送 ↗'}).click();
+  await page.getByText('已拦截无依据承诺', {exact:false}).waitFor();
+  assert.match(await page.getByRole('textbox',{name:'回复草稿'}).inputValue(),/核实/);
+  assert.equal(await page.locator('.simulated').count(),0);results.push('unsafe commitment is downgraded before send');
   await page.getByRole('textbox',{name:'回复草稿'}).fill('理解您希望尽快处理的心情。我会整理您已经提供的信息交给专员核实，后续有进展再向您反馈。');await wait(page,6000);
   await page.getByRole('button',{name:'模拟发送 ↗'}).click();
+  await page.locator('.simulated').waitFor();
   assert.equal(await page.locator('.simulated').count(),1);results.push('editable suggested response and local simulated send');await wait(page);
   await page.getByRole('button',{name:'创建跟进',exact:true}).click();await wait(page);
   await page.getByLabel('任务名称',{exact:true}).fill(taskTitle);

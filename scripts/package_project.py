@@ -10,9 +10,10 @@ OUT = ROOT / 'deliverables'
 
 def main():
     files = [ROOT/n for n in ['README.md','server.py','start.cmd','start.ps1','requirements.txt','package.json','.env.example','.gitignore']]
-    for folder, suffixes in [('src',{'.py'}),('tests',{'.py'}),('web',{'.html','.js','.css'}),('docs',{'.md'}),('scripts',{'.py','.cjs'})]:
+    for folder, suffixes in [('src',{'.py'}),('tests',{'.py'}),('web',{'.html','.js','.css'}),('docs',{'.md'}),('scripts',{'.py','.cjs','.ps1'})]:
         files += [p for p in (ROOT/folder).glob('*') if p.suffix in suffixes and p.name!='inspect.cjs']
-    files += [ROOT/'data/dataset.json',ROOT/'data/evaluation.json']
+    files += [ROOT/'data'/n for n in ['dataset.json','evaluation.json','online_evaluation_v2.json',
+                                      'challenge_set.json','challenge_evaluation.json','release_summary.json']]
     files += [p for p in ROOT.iterdir() if p.suffix in {'.xlsx','.docx','.pptx'}]
     # Screenshots required to reproduce the deck, kept with the original path contract.
     files += [OUT/n for n in ['01-workspace.png','02-replay.png','03-journey.png','05-tasks.png']]

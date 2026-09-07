@@ -1,16 +1,16 @@
 {
   "method": "首条消息预测；全量同源 MOCK 诊断评估；规则未读取标签，不是独立留出集",
   "samples": 138,
-  "accuracy": 0.7898550724637681,
-  "macro_f1": 0.8561047989361882,
+  "accuracy": 0.7753623188405797,
+  "macro_f1": 0.8438825767139658,
   "by_class": [
     {
       "label": "不良反应",
       "support": 10,
-      "correct": 9,
-      "recall": 0.9,
-      "precision": 0.9,
-      "f1": 0.9
+      "correct": 7,
+      "recall": 0.7,
+      "precision": 0.875,
+      "f1": 0.7777777777777777
     },
     {
       "label": "产品咨询",
@@ -86,10 +86,10 @@
     }
   ],
   "initial_baseline_accuracy": 0.42028985507246375,
-  "full_conversation_accuracy": 0.9202898550724637,
-  "abstentions": 21,
-  "latency_mean_ms": 0.04411086906591241,
-  "latency_p95_ms": 0.04189999890513718,
+  "full_conversation_accuracy": 0.9057971014492754,
+  "abstentions": 23,
+  "latency_mean_ms": 0.05780217390460218,
+  "latency_p95_ms": 0.060399994254112244,
   "errors": [
     {
       "id": "S00002",
@@ -146,6 +146,12 @@
       "correct": false
     },
     {
+      "id": "S00058",
+      "label": "不良反应",
+      "prediction": "待确认",
+      "correct": false
+    },
+    {
       "id": "S00063",
       "label": "物流异常",
       "prediction": "物流服务",
@@ -178,6 +184,12 @@
     {
       "id": "S00078",
       "label": "售后退货",
+      "prediction": "待确认",
+      "correct": false
+    },
+    {
+      "id": "S00079",
+      "label": "不良反应",
       "prediction": "待确认",
       "correct": false
     },

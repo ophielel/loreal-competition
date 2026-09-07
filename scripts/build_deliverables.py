@@ -131,21 +131,22 @@ def main():
         ('失败可理解','超时或结果不合法时保留规则结果，显示降级原因；密钥不进入前端。')]):
         x=.8+(i%2)*6.1;y=2.13+(i//2)*1.85
         rect(s,x,y,5.82,1.62);text(s,x+.22,y+.2,5.3,.42,head,19,TEAL,True);text(s,x+.22,y+.76,5.3,.71,body,15,MUTED)
-    foot(s,'当前未做真实账号在线 Qwen 验证，也没有可报告的大模型准确率、节省金额或真实业务提升。')
+    foot(s,'已保存 276 个真实 Qwen 评测场景；冲刺版使用保存输出离线重放，仍无真实业务提升或生产泛化结论。')
 
-    v=json.loads((ROOT/'data/evaluation.json').read_text(encoding='utf-8'))
-    s=slides[8]; title(s,9,'先报告可核实的结果，再谈业务价值。','评估 / 同源 MOCK 开发集诊断，非独立测试集')
-    for i,(num,lab) in enumerate([(f"{v['accuracy']:.1%}",'首条消息准确率'),(f"{v['full_conversation_accuracy']:.1%}",'完整会话准确率'),(str(v['abstentions']),'首条消息待确认')]):
+    release=json.loads((ROOT/'data/release_summary.json').read_text(encoding='utf-8'))
+    dev=release['official_dev_metrics']; challenge=release['challenge_metrics']
+    s=slides[8]; title(s,9,'先报告可核实的结果，再谈业务价值。','评估 / 官方同源开发集 + 50 条独立人工边界集')
+    for i,(num,lab) in enumerate([(f"{dev['first_message']['hybrid']['accuracy']:.1%}",'Hybrid 首条意图'),(f"{dev['full_conversation']['hybrid']['accuracy']:.1%}",'Hybrid 完整会话'),(f"{challenge['unsafe_commitment_recall']:.0%}",'危险承诺拦截召回')]):
         x=.8+i*4.05;rect(s,x,2.12,3.8,1.48);text(s,x+.23,2.25,3.3,.7,num,35,TEAL,True);text(s,x+.23,3.04,3.3,.36,lab,15,MUTED)
-    text(s,.85,3.93,5.65,1.96,'首版规则：42.0%\n同一开发数据诊断改进：79.0%\n主意图 Macro-F1：0.856\n场景标签只用于评估，不进入推断',17)
-    text(s,7.1,3.93,5.25,2.0,'不能由这些数字推出\n真实场景泛化、情绪准确率、风险召回率、客服满意度或处理效率提升。\n下一步：独立盲测 + 人工双标 + 客服交叉试用。',16,MUTED)
-    foot(s,'138 个官方模拟会话。完整会话使用更多消息，不与首条消息口径混比。详见 docs/EVALUATION.md。')
+    text(s,.85,3.93,5.65,1.96,f"官方 138 会话：Rules {dev['first_message']['rules']['accuracy']:.1%}\nQwen {dev['first_message']['qwen']['accuracy']:.1%} / Hybrid {dev['first_message']['hybrid']['accuracy']:.1%}\n保存的真实 Qwen 输出按当前决策重放\n标签不进入在线推断",17)
+    text(s,7.1,3.93,5.25,2.0,f"Challenge Set（50 条）\nIntent {challenge['intent_accuracy']:.1%} · Risk Recall {challenge['risk_recall']:.0%}\nEvidence Support {challenge['evidence_support_rate']:.0%}\n小型边界回归，不代表生产泛化。",16,MUTED)
+    foot(s,'统一指标来源：data/release_summary.json；详见 docs/EVALUATION.md 与 CHALLENGE_EVALUATION.md。')
 
     s=slides[9]; title(s,10,'能跑、能核实，也能交接。','项目交付 / 在真实浏览器验证完整操作链路')
     rect(s,.8,2.1,5.7,3.75);text(s,1.05,2.36,5.1,.55,'已交付',23,TEAL,True)
     text(s,1.05,3.06,5.1,2.5,'可运行的三栏工作台\n源码与原始/导入数据\nAgent 设计与运行指南\n官方模板 PPT + 实际操作录屏\n可重跑规则评估与测试',18)
     rect(s,6.8,2.1,5.7,3.75);text(s,7.05,2.36,5.1,.55,'验证证据',23,TEAL,True)
-    text(s,7.05,3.06,5.1,2.5,'20 项 Python 单元 / API 测试\n19 项真实 Edge 浏览器检查\n320～1440 px 无页面横向溢出\n控制台错误：0\n模型缺钥时明确降级',18)
+    text(s,7.05,3.06,5.1,2.5,f"{release['python_test_count']} 项 Python 单元 / API 测试\n{release['browser_check_count']} 项真实 Edge 浏览器检查\n320～1440 px 无页面横向溢出\n控制台错误：0\n模型缺钥时明确降级",18)
     foot(s,'验证针对本地 Demo；不能替代真实模型、真实千牛接入、安全审计或生产负载测试。')
 
     s=slides[10]; title(s,11,'把“可能有用”，推进到“证明确实有用”。','未来完善方向 / 价值假设与验证路线')

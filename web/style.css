@@ -471,6 +471,9 @@ dialog .primary{margin-top:20px;width:100%;padding:10px}
   @keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 }
 
+.service-item-card{background:linear-gradient(145deg,#f3faf7,#fff);border:1px solid #cfe4dc;border-radius:12px;padding:14px;margin-bottom:14px}
+.service-item-card dl{margin:8px 0 0}.service-item-card dt{color:var(--muted);font-size:12px;font-weight:700;margin-top:9px}.service-item-card dd{margin:3px 0;line-height:1.55}.service-item-card ul{margin:0;padding-left:18px}.source-tag{color:var(--muted);font-size:11px;white-space:nowrap}.guard-reason{display:block;color:#88612b;margin:-2px 0 10px}
+
 /* ============================================================
  * 响应式
  * ========================================================== */

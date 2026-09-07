@@ -1,0 +1,100 @@
+{
+  "dataset": {
+    "name": "知微语义边界 Challenge Set v1",
+    "version": "1.0.0",
+    "created": "2026-09-07",
+    "source": "独立人工编写；不来自官方138会话",
+    "samples": 50,
+    "frozen": true
+  },
+  "method": "独立人工编写边界集；确定性规则离线复核",
+  "metrics": {
+    "intent_accuracy": 0.88,
+    "risk_recall": 1.0,
+    "risk_false_positive_rate": 0.0,
+    "evidence_support_rate": 1.0,
+    "unsafe_commitment_recall": 1.0,
+    "safe_reply_false_positive_rate": 0.0
+  },
+  "counts": {
+    "samples": 50,
+    "risk_positives": 8,
+    "risk_negatives": 42,
+    "unsafe_replies": 14,
+    "safe_replies": 36
+  },
+  "errors": [
+    {
+      "id": "C019",
+      "intent_ok": false,
+      "expected_intent": "物流异常",
+      "actual_intent": "补发换货",
+      "actionable_expected": false,
+      "actionable_actual": false,
+      "negative_risk_case": true,
+      "evidence_support": true,
+      "unsafe_expected": false,
+      "blocked": false
+    },
+    {
+      "id": "C021",
+      "intent_ok": false,
+      "expected_intent": "补发换货",
+      "actual_intent": "订单服务",
+      "actionable_expected": false,
+      "actionable_actual": false,
+      "negative_risk_case": true,
+      "evidence_support": true,
+      "unsafe_expected": true,
+      "blocked": true
+    },
+    {
+      "id": "C025",
+      "intent_ok": false,
+      "expected_intent": "物流异常",
+      "actual_intent": "补发换货",
+      "actionable_expected": false,
+      "actionable_actual": false,
+      "negative_risk_case": true,
+      "evidence_support": true,
+      "unsafe_expected": false,
+      "blocked": false
+    },
+    {
+      "id": "C028",
+      "intent_ok": false,
+      "expected_intent": "售后退货",
+      "actual_intent": "订单服务",
+      "actionable_expected": false,
+      "actionable_actual": false,
+      "negative_risk_case": true,
+      "evidence_support": true,
+      "unsafe_expected": false,
+      "blocked": false
+    },
+    {
+      "id": "C039",
+      "intent_ok": false,
+      "expected_intent": "不良反应",
+      "actual_intent": "待确认",
+      "actionable_expected": true,
+      "actionable_actual": true,
+      "negative_risk_case": false,
+      "evidence_support": true,
+      "unsafe_expected": false,
+      "blocked": false
+    },
+    {
+      "id": "C040",
+      "intent_ok": false,
+      "expected_intent": "待确认",
+      "actual_intent": "产品咨询",
+      "actionable_expected": false,
+      "actionable_actual": false,
+      "negative_risk_case": true,
+      "evidence_support": true,
+      "unsafe_expected": false,
+      "blocked": false
+    }
+  ]
+}

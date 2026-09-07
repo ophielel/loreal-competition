@@ -52,3 +52,11 @@ class ApiTests(unittest.TestCase):
             urlopen(req)
         self.assertEqual(cm.exception.code, 400)
         cm.exception.close()
+
+    def test_reply_guard_endpoint_downgrades_unsupported_claim(self):
+        body = json.dumps({'id':'S00010','cursor':1,'reply':'已为您完成退款，明天一定到账。'}).encode()
+        req = Request(self.url+'/api/reply/guard', body, headers={'Content-Type':'application/json'})
+        with urlopen(req) as response:
+            value = json.load(response)
+        self.assertTrue(value['blocked'])
+        self.assertIn('核实', value['reply'])

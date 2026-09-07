@@ -49,20 +49,18 @@ python server.py --port 8766
 
 | 评测时点 | 样本数 | 方法 | 主意图准确率 | Macro-F1 |
 |---|---:|---|---:|---:|
-| 首条消息 | 138 | 规则基线 | 78.99% | 0.8561 |
+| 首条消息 | 138 | 当前规则 | 77.54% | 0.8439 |
 | 首条消息 | 138 | Qwen 原始意图 | 73.91% | 0.7955 |
-| 首条消息 | 138 | Hybrid 最终结果 | 83.33% | 0.8817 |
-| 完整会话 | 138 | 规则基线 | 92.03% | 0.9321 |
+| 首条消息 | 138 | 当前 Hybrid 重放 | 83.33% | 0.8817 |
+| 完整会话 | 138 | 当前规则 | 90.58% | 0.9032 |
 | 完整会话 | 138 | Qwen 原始意图 | 84.06% | 0.8385 |
-| 完整会话 | 138 | Hybrid 最终结果 | 93.48% | 0.9296 |
+| 完整会话 | 138 | 当前 Hybrid 重放 | 92.75% | 0.9202 |
 
-“Qwen 原始意图”在校验前计分；Hybrid 结合模型语义、业务规则和健康风险门控。270/273 个模型响应通过校验，3个引用无效的响应回退规则，另有3个场景因没有可见买家消息而弃权。
-
-Hybrid 准确率高于规则基线：首条消息 83.33%（规则 78.99%），完整会话 93.48%（规则 92.03%）。完整会话 Macro-F1 为 0.9296，规则基线为 0.9321。
+“Qwen 原始意图”来自已保存的 276 次真实调用；当前 Hybrid 指标将这些输出按当前规则与意图决策重新离线重放，未再次发起网络请求。270 个模型响应通过校验，3 个引用无效响应回退规则，另有 3 个无可见买家消息场景弃权。安全语义修复会降低部分同源开发集规则意图分数，但优先消除了否定/假设风险误报。统一口径见 `data/release_summary.json`。
 
 ### 评测边界与复现
 
-数据为官方同源 MOCK 开发数据，**不是独立测试集，也不代表生产环境泛化**。完整会话遵守历史回放的时间截断；风险、情绪和证据语义支持没有人工金标，因此不报告这些指标的准确率。
+数据为官方同源 MOCK 开发数据，**不是独立测试集，也不代表生产环境泛化**。另建的 50 条人工审核 Challenge Set 与官方数据分开保存：Intent 88.00%，Risk Recall 100.00%、Risk False Positive 0.00%、Evidence Support 100.00%、Unsafe Commitment Recall 100.00%、安全回复误拦截 0.00%。这些是小型边界回归结果，不是生产结论。详见 [Challenge Set 报告](docs/CHALLENGE_EVALUATION.md)。
 
 详见 [在线评测报告](docs/ONLINE_EVALUATION.md)、[低分原因分析](docs/ONLINE_EVALUATION_ANALYSIS.md) 和 [评测数据](data/online_evaluation_v2.json)。
 
@@ -71,6 +69,8 @@ Hybrid 准确率高于规则基线：首条消息 83.33%（规则 78.99%），�
 ```powershell
 python -m unittest discover -s tests -v
 python scripts/evaluate.py
+python scripts/evaluate_challenge.py
+python scripts/build_release_summary.py
 # 重新导入或生成 PPT 才需要下列依赖
 python -m pip install -r requirements.txt
 python scripts/import_data.py
@@ -87,7 +87,8 @@ python scripts/build_deliverables.py
 - deliverables/知微_项目源码.zip：可独立解压运行的源码、数据、说明和测试。
 - docs/AGENT_DESIGN.md：Agent 工作流、接口与边界。
 - docs/DEMO_SCRIPT.md：讲解稿与演示步骤。
-- docs/EVALUATION.md、deliverables/browser-checks.json：评估与验证记录。
+- docs/EVALUATION.md、docs/CHALLENGE_EVALUATION.md、deliverables/browser-checks.json：评估与验证记录。
+- data/release_summary.json：版本、数据哈希、Rules/Qwen/Hybrid 指标与测试数量的统一来源。
 
 ## 后续待完成事项
 

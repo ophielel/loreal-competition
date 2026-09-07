@@ -8,7 +8,7 @@ from copy import deepcopy
 from urllib.request import Request, urlopen
 from urllib.parse import urlparse
 
-from src.engine import POLICIES, snapshot
+from src.engine import POLICIES, guard_reply, snapshot
 from src.taxonomy import DEFINITIONS, VERSION, prompt_taxonomy, strong_anchor
 
 CACHE = {}
@@ -90,14 +90,21 @@ def merge_hybrid(s, baseline, result):
     extra.update(action=action, guard=guard)
     if source == 'rule' or health_gate or model_health:
         extra['reply'] = safe_reply
+    reply_guard = guard_reply(extra['reply'], s)
+    extra['reply'] = reply_guard['reply']
+    extra['reply_guard'] = reply_guard
     if health_gate or model_health:
         extra['priority'] = '高'
         if model_health and not health_gate:
-            extra['risks'] = baseline['risks'] + [{'title': '模型提示使用不适', 'detail': '语义推断，需核对引用并转专员确认。',
+            extra['risks'] = baseline['risks'] + [{'risk_type': 'model_health', 'title': '模型提示使用不适',
+                                                'semantic_state': '待核实', 'actionable': True,
+                                                'detail': '语义推断，需核对引用并转专员确认。',
                                                 'level': '高', 'evidence_ids': result['intent_evidence_ids']}]
+    guard_trace = ([{'step': '回复安全门', 'detail': '；'.join(reply_guard['reasons'])}]
+                   if reply_guard['blocked'] else [])
     extra['trace'] = baseline['trace'][:-1] + [
         {'step': 'Qwen 语义分析', 'detail': 'JSON 与可见引用校验通过；语义仍需人工审核'},
-        {'step': 'Hybrid 主意图决策', 'detail': reason}] + baseline['trace'][-1:]
+        {'step': 'Hybrid 主意图决策', 'detail': reason}] + guard_trace + baseline['trace'][-1:]
     return {**baseline, **extra, 'human_required': True}
 
 

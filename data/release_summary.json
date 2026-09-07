@@ -1,0 +1,498 @@
+{
+  "version": "1.1.0-rc1",
+  "date": "2026-09-07",
+  "code_revision": "d1107b6+working-tree",
+  "dataset_hash": "sha256:302db6cdc5517a6d883a4d5244815369a85ac0c32a23496f3ab4002c6b2d8673",
+  "official_dataset": {
+    "sessions": 138,
+    "messages": 998,
+    "orders": 113,
+    "tickets": 80
+  },
+  "model": "qwen3.7-flash-2026-07-15",
+  "online_source": {
+    "evaluated_commit": "60c6be9d23d7b832853adec7b4f7381c891bf33d",
+    "responses": 276,
+    "valid_responses": 270,
+    "note": "保存的真实 Qwen 输出按当前规则/Hybrid 意图决策离线重放；未再次发起网络调用"
+  },
+  "official_dev_metrics": {
+    "first_message": {
+      "rules": {
+        "samples": 138,
+        "accuracy": 0.7753623188405797,
+        "macro_f1": 0.8438825767139658,
+        "by_class": [
+          {
+            "label": "不良反应",
+            "support": 10,
+            "precision": 0.875,
+            "recall": 0.7,
+            "f1": 0.7777777777777777
+          },
+          {
+            "label": "产品咨询",
+            "support": 25,
+            "precision": 0.9,
+            "recall": 0.36,
+            "f1": 0.5142857142857143
+          },
+          {
+            "label": "会员服务",
+            "support": 3,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          {
+            "label": "其他服务",
+            "support": 3,
+            "precision": 1.0,
+            "recall": 0.6666666666666666,
+            "f1": 0.8
+          },
+          {
+            "label": "售后退货",
+            "support": 18,
+            "precision": 0.8823529411764706,
+            "recall": 0.8333333333333334,
+            "f1": 0.8571428571428571
+          },
+          {
+            "label": "物流异常",
+            "support": 15,
+            "precision": 1.0,
+            "recall": 0.8,
+            "f1": 0.888888888888889
+          },
+          {
+            "label": "物流服务",
+            "support": 8,
+            "precision": 0.7,
+            "recall": 0.875,
+            "f1": 0.7777777777777777
+          },
+          {
+            "label": "补发换货",
+            "support": 21,
+            "precision": 1.0,
+            "recall": 0.9523809523809523,
+            "f1": 0.975609756097561
+          },
+          {
+            "label": "订单服务",
+            "support": 22,
+            "precision": 0.9565217391304348,
+            "recall": 1.0,
+            "f1": 0.9777777777777777
+          },
+          {
+            "label": "退款打款",
+            "support": 13,
+            "precision": 1.0,
+            "recall": 0.7692307692307693,
+            "f1": 0.8695652173913044
+          }
+        ]
+      },
+      "qwen": {
+        "samples": 138,
+        "accuracy": 0.7391304347826086,
+        "macro_f1": 0.7954566809179813,
+        "by_class": [
+          {
+            "label": "不良反应",
+            "support": 10,
+            "precision": 0.9090909090909091,
+            "recall": 1.0,
+            "f1": 0.9523809523809523
+          },
+          {
+            "label": "产品咨询",
+            "support": 25,
+            "precision": 1.0,
+            "recall": 0.44,
+            "f1": 0.6111111111111112
+          },
+          {
+            "label": "会员服务",
+            "support": 3,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.8571428571428571
+          },
+          {
+            "label": "其他服务",
+            "support": 3,
+            "precision": 1.0,
+            "recall": 0.6666666666666666,
+            "f1": 0.8
+          },
+          {
+            "label": "售后退货",
+            "support": 18,
+            "precision": 0.9375,
+            "recall": 0.8333333333333334,
+            "f1": 0.8823529411764706
+          },
+          {
+            "label": "物流异常",
+            "support": 15,
+            "precision": 0.9,
+            "recall": 0.6,
+            "f1": 0.7200000000000001
+          },
+          {
+            "label": "物流服务",
+            "support": 8,
+            "precision": 0.875,
+            "recall": 0.875,
+            "f1": 0.875
+          },
+          {
+            "label": "补发换货",
+            "support": 21,
+            "precision": 0.7407407407407407,
+            "recall": 0.9523809523809523,
+            "f1": 0.8333333333333334
+          },
+          {
+            "label": "订单服务",
+            "support": 22,
+            "precision": 0.7307692307692307,
+            "recall": 0.8636363636363636,
+            "f1": 0.7916666666666666
+          },
+          {
+            "label": "退款打款",
+            "support": 13,
+            "precision": 1.0,
+            "recall": 0.46153846153846156,
+            "f1": 0.631578947368421
+          }
+        ]
+      },
+      "hybrid": {
+        "samples": 138,
+        "accuracy": 0.8333333333333334,
+        "macro_f1": 0.8816562137049943,
+        "by_class": [
+          {
+            "label": "不良反应",
+            "support": 10,
+            "precision": 0.9090909090909091,
+            "recall": 1.0,
+            "f1": 0.9523809523809523
+          },
+          {
+            "label": "产品咨询",
+            "support": 25,
+            "precision": 1.0,
+            "recall": 0.4,
+            "f1": 0.5714285714285715
+          },
+          {
+            "label": "会员服务",
+            "support": 3,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.8571428571428571
+          },
+          {
+            "label": "其他服务",
+            "support": 3,
+            "precision": 1.0,
+            "recall": 0.6666666666666666,
+            "f1": 0.8
+          },
+          {
+            "label": "售后退货",
+            "support": 18,
+            "precision": 0.8333333333333334,
+            "recall": 0.8333333333333334,
+            "f1": 0.8333333333333334
+          },
+          {
+            "label": "物流异常",
+            "support": 15,
+            "precision": 0.9333333333333333,
+            "recall": 0.9333333333333333,
+            "f1": 0.9333333333333333
+          },
+          {
+            "label": "物流服务",
+            "support": 8,
+            "precision": 1.0,
+            "recall": 0.875,
+            "f1": 0.9333333333333333
+          },
+          {
+            "label": "补发换货",
+            "support": 21,
+            "precision": 1.0,
+            "recall": 0.9523809523809523,
+            "f1": 0.975609756097561
+          },
+          {
+            "label": "订单服务",
+            "support": 22,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          {
+            "label": "退款打款",
+            "support": 13,
+            "precision": 1.0,
+            "recall": 0.9230769230769231,
+            "f1": 0.9600000000000001
+          }
+        ]
+      }
+    },
+    "full_conversation": {
+      "rules": {
+        "samples": 138,
+        "accuracy": 0.9057971014492754,
+        "macro_f1": 0.9032190452985548,
+        "by_class": [
+          {
+            "label": "不良反应",
+            "support": 10,
+            "precision": 0.875,
+            "recall": 0.7,
+            "f1": 0.7777777777777777
+          },
+          {
+            "label": "产品咨询",
+            "support": 25,
+            "precision": 0.9583333333333334,
+            "recall": 0.92,
+            "f1": 0.9387755102040817
+          },
+          {
+            "label": "会员服务",
+            "support": 3,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          {
+            "label": "其他服务",
+            "support": 3,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.8571428571428571
+          },
+          {
+            "label": "售后退货",
+            "support": 18,
+            "precision": 0.8421052631578947,
+            "recall": 0.8888888888888888,
+            "f1": 0.8648648648648649
+          },
+          {
+            "label": "物流异常",
+            "support": 15,
+            "precision": 1.0,
+            "recall": 0.8666666666666667,
+            "f1": 0.9285714285714286
+          },
+          {
+            "label": "物流服务",
+            "support": 8,
+            "precision": 0.7272727272727273,
+            "recall": 1.0,
+            "f1": 0.8421052631578948
+          },
+          {
+            "label": "补发换货",
+            "support": 21,
+            "precision": 1.0,
+            "recall": 0.9523809523809523,
+            "f1": 0.975609756097561
+          },
+          {
+            "label": "订单服务",
+            "support": 22,
+            "precision": 0.9565217391304348,
+            "recall": 1.0,
+            "f1": 0.9777777777777777
+          },
+          {
+            "label": "退款打款",
+            "support": 13,
+            "precision": 1.0,
+            "recall": 0.7692307692307693,
+            "f1": 0.8695652173913044
+          }
+        ]
+      },
+      "qwen": {
+        "samples": 138,
+        "accuracy": 0.8405797101449275,
+        "macro_f1": 0.8384803666201879,
+        "by_class": [
+          {
+            "label": "不良反应",
+            "support": 10,
+            "precision": 1.0,
+            "recall": 0.7,
+            "f1": 0.8235294117647058
+          },
+          {
+            "label": "产品咨询",
+            "support": 25,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          {
+            "label": "会员服务",
+            "support": 3,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.8571428571428571
+          },
+          {
+            "label": "其他服务",
+            "support": 3,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          {
+            "label": "售后退货",
+            "support": 18,
+            "precision": 0.8421052631578947,
+            "recall": 0.8888888888888888,
+            "f1": 0.8648648648648649
+          },
+          {
+            "label": "物流异常",
+            "support": 15,
+            "precision": 0.75,
+            "recall": 0.4,
+            "f1": 0.5217391304347827
+          },
+          {
+            "label": "物流服务",
+            "support": 8,
+            "precision": 0.7272727272727273,
+            "recall": 1.0,
+            "f1": 0.8421052631578948
+          },
+          {
+            "label": "补发换货",
+            "support": 21,
+            "precision": 0.6896551724137931,
+            "recall": 0.9523809523809523,
+            "f1": 0.7999999999999999
+          },
+          {
+            "label": "订单服务",
+            "support": 22,
+            "precision": 0.8947368421052632,
+            "recall": 0.7727272727272727,
+            "f1": 0.8292682926829269
+          },
+          {
+            "label": "退款打款",
+            "support": 13,
+            "precision": 0.8461538461538461,
+            "recall": 0.8461538461538461,
+            "f1": 0.8461538461538461
+          }
+        ]
+      },
+      "hybrid": {
+        "samples": 138,
+        "accuracy": 0.927536231884058,
+        "macro_f1": 0.9201538381398198,
+        "by_class": [
+          {
+            "label": "不良反应",
+            "support": 10,
+            "precision": 1.0,
+            "recall": 0.6,
+            "f1": 0.7499999999999999
+          },
+          {
+            "label": "产品咨询",
+            "support": 25,
+            "precision": 1.0,
+            "recall": 0.96,
+            "f1": 0.9795918367346939
+          },
+          {
+            "label": "会员服务",
+            "support": 3,
+            "precision": 0.75,
+            "recall": 1.0,
+            "f1": 0.8571428571428571
+          },
+          {
+            "label": "其他服务",
+            "support": 3,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          {
+            "label": "售后退货",
+            "support": 18,
+            "precision": 0.7391304347826086,
+            "recall": 0.9444444444444444,
+            "f1": 0.8292682926829269
+          },
+          {
+            "label": "物流异常",
+            "support": 15,
+            "precision": 0.9333333333333333,
+            "recall": 0.9333333333333333,
+            "f1": 0.9333333333333333
+          },
+          {
+            "label": "物流服务",
+            "support": 8,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0
+          },
+          {
+            "label": "补发换货",
+            "support": 21,
+            "precision": 0.9523809523809523,
+            "recall": 0.9523809523809523,
+            "f1": 0.9523809523809523
+          },
+          {
+            "label": "订单服务",
+            "support": 22,
+            "precision": 1.0,
+            "recall": 0.9545454545454546,
+            "f1": 0.9767441860465117
+          },
+          {
+            "label": "退款打款",
+            "support": 13,
+            "precision": 0.9230769230769231,
+            "recall": 0.9230769230769231,
+            "f1": 0.9230769230769231
+          }
+        ]
+      }
+    }
+  },
+  "challenge_metrics": {
+    "intent_accuracy": 0.88,
+    "risk_recall": 1.0,
+    "risk_false_positive_rate": 0.0,
+    "evidence_support_rate": 1.0,
+    "unsafe_commitment_recall": 1.0,
+    "safe_reply_false_positive_rate": 0.0
+  },
+  "python_test_count": 48,
+  "browser_check_count": 21,
+  "artifacts_note": "生成交付物前以本文件为唯一版本与指标来源"
+}

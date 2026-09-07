@@ -6,7 +6,7 @@ from pathlib import Path
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import parse_qs, urlparse
 
-from src.engine import analyze, snapshot
+from src.engine import analyze, guard_reply, snapshot
 from src.model import configured, enhance
 from src.store import list_tasks, create_task, complete_task
 
@@ -66,7 +66,10 @@ class Handler(BaseHTTPRequestHandler):
                 return self.response({'tasks': list_tasks()})
             if parsed.path == '/api/evaluation':
                 path = ROOT / 'data/evaluation.json'
-                return self.response(json.loads(path.read_text(encoding='utf-8')) if path.exists() else {'pending': True})
+                value = json.loads(path.read_text(encoding='utf-8')) if path.exists() else {'pending': True}
+                release = ROOT / 'data/release_summary.json'
+                if release.exists(): value['release_summary'] = json.loads(release.read_text(encoding='utf-8'))
+                return self.response(value)
             files = {'/': 'index.html', '/index.html': 'index.html', '/app.js': 'app.js', '/style.css': 'style.css'}
             if parsed.path not in files:
                 return self.response({'error': '页面不存在'}, 404)
@@ -95,6 +98,13 @@ class Handler(BaseHTTPRequestHandler):
                 cursor = int(body.get('cursor', 1))
                 s = self.get_session(body.get('id'), cursor)
                 return self.response(enhance(s, cursor, analyze(s, cursor)))
+            if self.path == '/api/reply/guard':
+                cursor = int(body.get('cursor', 1))
+                s = self.get_session(body.get('id'), cursor)
+                reply = body.get('reply', '')
+                if not isinstance(reply, str) or not 1 <= len(reply.strip()) <= 2000:
+                    raise ValueError('回复字段无效')
+                return self.response(guard_reply(reply.strip(), snapshot(s, cursor)))
             if self.path == '/api/tasks':
                 cursor = int(body.get('cursor', 1))
                 s = self.get_session(body.get('id'), cursor)
