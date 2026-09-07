@@ -88,8 +88,8 @@
   "initial_baseline_accuracy": 0.42028985507246375,
   "full_conversation_accuracy": 0.9057971014492754,
   "abstentions": 23,
-  "latency_mean_ms": 0.05780217390460218,
-  "latency_p95_ms": 0.060399994254112244,
+  "latency_mean_ms": 0.0863497681154803,
+  "latency_p95_ms": 0.11828600000285405,
   "errors": [
     {
       "id": "S00002",
@@ -278,12 +278,11 @@
       "correct": false
     }
   ],
-  "model_evaluated": false,
+  "scope": "rules_baseline_only",
   "limitations": [
     "官方数据为模板化虚构样本",
     "无独立测试集",
     "无情绪和风险金标",
-    "无真实业务 A/B 结果",
-    "未进行在线大模型评估"
+    "无真实业务 A/B 结果"
   ]
 }

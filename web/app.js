@@ -47,7 +47,7 @@ const state = {
   request: 0,            // 会话请求序号，丢弃过期响应
   drafts: {},            // 每个会话的回复草稿
   sent: {},              // 每个会话的本地模拟发送
-  modelBusy: false,
+  enhancements: new Map(), // 按快照跟踪异步 Hybrid；不同会话互不阻塞
 };
 
 /* ---------- 通用模板片段 ---------- */
@@ -105,6 +105,8 @@ async function loadSession(id, cursor) {
     renderConversation();
     renderCopilot();
     $('#reply').value = state.drafts[id] || '';
+    // Keep navigation/replay responsive: render rules immediately, then enhance.
+    if (state.overview.model_configured) requestEnhancement(id, cursor, request);
   } catch (err) {
     toast(err.message);
   } finally {
@@ -174,11 +176,16 @@ function renderCopilot() {
   if (!state.data) return;
   const a = state.data.analysis;
   const s = state.data.session;
-  $('#analysis-mode').textContent = a.mode === 'qwen'
-    ? `Qwen + Hybrid · ${a.model} · ${a.cache_hit ? '缓存命中' : a.call_tokens + ' tokens'}`
-    : `已安全回退 · ${a.model_error_code === 'invalid_output' ? '输出校验失败' : a.model_error_code === 'request_failed' ? '调用失败' : a.model_error_code === 'no_buyer_evidence' ? '当前无买家证据' : a.model_error_code === 'invalid_config' ? '模型配置无效' : 'Qwen 未配置'}`;
-  $('#model-button').disabled = state.modelBusy;
-  $('#model-button').textContent = state.modelBusy ? '正在分析…' : '重新分析 ↻';
+  const enhancementPending = state.enhancements.has(`${state.id}:${state.cursor}`);
+  $('#analysis-mode').textContent = enhancementPending
+    ? 'Qwen + Hybrid · 正在异步增强…'
+    : a.mode === 'qwen'
+      ? `Qwen + Hybrid · ${a.model} · ${a.cache_hit ? '缓存命中' : a.call_tokens + ' tokens'}`
+      : state.overview.model_configured && !a.model_error
+        ? 'Qwen + Hybrid · 等待异步增强'
+        : `已安全回退 · ${a.model_error_code === 'invalid_output' ? '输出校验失败' : a.model_error_code === 'request_failed' ? '调用失败' : a.model_error_code === 'no_buyer_evidence' ? '当前无买家证据' : a.model_error_code === 'invalid_config' ? '模型配置无效' : 'Qwen 未配置'}`;
+  $('#model-button').disabled = enhancementPending;
+  $('#model-button').textContent = enhancementPending ? '正在分析…' : '重新分析 ↻';
   if (state.tab === 'journey') return renderJourney(s);
   renderInsight(a, s);
 }
@@ -324,6 +331,7 @@ function metricsViewHtml(v) {
     ${challenge ? `<section class="data-panel"><h3>独立 Challenge Set <span class="count">50</span></h3>
       <p class="muted">人工编写语义边界集，与官方 138 会话分开；以下为 Rules + Safety Gate 回归，不是 Qwen 指标；版本 ${e(release.version)}。</p>
       <div class="summary-tags">${pill('Intent ' + (challenge.intent_accuracy*100).toFixed(1) + '%','green')}
+        ${pill('Risk Type ' + (challenge.risk_type_accuracy*100).toFixed(1) + '%','green')}
         ${pill('Risk Recall ' + (challenge.risk_recall*100).toFixed(1) + '%','green')}
         ${pill('Evidence ' + (challenge.evidence_support_rate*100).toFixed(1) + '%','green')}
         ${pill('Unsafe ' + (challenge.unsafe_commitment_recall*100).toFixed(1) + '%','green')}</div>
@@ -510,23 +518,33 @@ $('#task-form').addEventListener('submit', async (event) => {
   }
 });
 
-$('#model-button').onclick = async () => {
-  if (!state.data || state.modelBusy) return;
-  const request = state.request;
-  state.modelBusy = true;
-  renderCopilot();
-  try {
-    const result = await api('/api/analyze', { id: state.id, cursor: state.cursor });
-    if (request === state.request) {
-      state.data.analysis = result;
-      toast(result.model_error || 'Qwen 分析完成，建议仍需人工审核');
-    }
-  } catch (err) {
-    toast(err.message);
-  } finally {
-    state.modelBusy = false;
-    renderCopilot();
+async function requestEnhancement(id, cursor, request, notify = false) {
+  const key = `${id}:${cursor}`;
+  let pending = state.enhancements.get(key);
+  if (!pending) {
+    pending = api('/api/analyze', { id, cursor });
+    state.enhancements.set(key, pending);
   }
+  if (request === state.request) renderCopilot();
+  try {
+    const result = await pending;
+    if (request === state.request && state.id === id && state.cursor === cursor) {
+      state.data.analysis = result;
+      if (notify || result.model_error) toast(result.model_error || 'Qwen 分析完成，建议仍需人工审核');
+    }
+    return result;
+  } catch (err) {
+    if (request === state.request) toast(err.message);
+    return null;
+  } finally {
+    if (state.enhancements.get(key) === pending) state.enhancements.delete(key);
+    if (request === state.request && state.id === id && state.cursor === cursor) renderCopilot();
+  }
+}
+
+$('#model-button').onclick = () => {
+  if (!state.data) return;
+  requestEnhancement(state.id, state.cursor, state.request, true);
 };
 
 $('#export-button').onclick = () => {

@@ -1,5 +1,6 @@
 {
-  "version": "1.2.0-rc1",
+  "version": "1.2.0",
+  "status": "frozen",
   "date": "2026-09-07",
   "official_dataset": {
     "sessions": 138,
@@ -483,13 +484,14 @@
   },
   "challenge_metrics": {
     "intent_accuracy": 0.88,
+    "risk_type_accuracy": 1.0,
     "risk_recall": 1.0,
     "risk_false_positive_rate": 0.0,
     "evidence_support_rate": 1.0,
     "unsafe_commitment_recall": 1.0,
     "safe_reply_false_positive_rate": 0.0
   },
-  "python_test_count": 50,
+  "python_test_count": 52,
   "browser_check_count": 22,
-  "artifacts_note": "生成交付物前以本文件为唯一版本与指标来源"
+  "artifacts_note": "最终回归通过；本版本冻结，不再增加功能"
 }

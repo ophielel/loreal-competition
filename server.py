@@ -62,9 +62,10 @@ class Handler(BaseHTTPRequestHandler):
                 sid = query.get('id', [''])[0]
                 cursor = int(query.get('cursor', ['1'])[0])
                 s = self.get_session(sid, cursor)
-                baseline = analyze(s, cursor)
+                # Return the deterministic snapshot immediately. The browser starts
+                # Qwen + Hybrid asynchronously through /api/analyze when configured.
                 return self.response({'session': snapshot(s, cursor),
-                                      'analysis': enhance(s, cursor, baseline), 'total': len(s['messages'])})
+                                      'analysis': analyze(s, cursor), 'total': len(s['messages'])})
             if parsed.path == '/api/tasks':
                 return self.response({'tasks': list_tasks()})
             if parsed.path == '/api/evaluation':

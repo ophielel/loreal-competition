@@ -1,13 +1,13 @@
 # 验证记录
 
-统一发布口径：`data/release_summary.json`（v1.2.0-rc1，2026-09-07）。
+统一发布口径：`data/release_summary.json`（v1.2.0，2026-09-07，冻结版）。
 
 ## 自动回归
 
 - `python -m unittest discover -s tests -v`：50/50 通过。
 - `node scripts/browser_test.cjs`：22/22 项真实 Edge 检查通过，控制台错误 0。
 - 浏览器覆盖：服务事项卡、风险证据跳转、时点隔离、归档工单、无依据承诺降级、可编辑安全回复、任务闭环、320～1440 px 无横向溢出。
-- Challenge Set：50 条独立人工编写边界案例；以下为 Rules + Safety Gate 回归（未调用 Qwen）：Intent 88.00%，Risk Recall 100.00%，Risk False Positive 0.00%，Evidence Support 100.00%，Unsafe Commitment Recall 100.00%，安全回复误拦截 0.00%。
+- Challenge Set：50 条独立人工编写边界案例；以下为 Rules + Safety Gate 回归（未调用 Qwen）：Intent 88.00%，Risk Type Accuracy 100.00%，Risk Recall 100.00%，Risk False Positive 0.00%，Evidence Support 100.00%，Unsafe Commitment Recall 100.00%，安全回复误拦截 0.00%。
 
 ## 数据与模型
 
@@ -22,7 +22,7 @@
 - 展示的确定性风险必须包含同一次匹配生成的 `evidence_ids`。
 - 否定、假设/咨询与既往风险不进入当前高风险路径；Qwen 的“不良反应”意图不能绕过 `evidence + semantic_state` 门控。
 - 无可见回执的“已退款/已补发/已完成”、到账保证和具体赔付金额会在模拟发送前降级。
-- 产品默认 Qwen + Hybrid；规则仅在未配置、调用失败或校验失败时安全回退，界面明确显示状态。
+- 产品默认 Qwen + Hybrid；会话/回放立即返回规则安全基线，前端按快照异步增强且不同会话互不阻塞；规则仅在未配置、调用失败或校验失败时安全回退，界面明确显示状态。
 - API Key 仅保存在服务进程内存，配置响应和页面状态不返回密钥。
 - 所有外部动作仍由人工确认；Demo 未连接真实千牛、支付、退款或物流系统。
 

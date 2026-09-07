@@ -21,7 +21,7 @@
 
 ## 小样本与健康门控
 
-小样本采用固定每类2个会话，名单记录于评测数据的pilot_session_ids；此次验证记录见低分原因分析。
+小样本采用固定每类2个会话，名单记录于评测数据的 pilot_session_ids。
 冲刺版增加风险语义与回复安全门后，`data/release_summary.json` 使用保存的 Qwen 原始意图按当前规则/Hybrid 意图决策重放；没有再次发起网络调用。合成回归覆盖未来 ID、客服单独引用、空字段、长度边界、标签隔离、健康分流、回复拦截及缓存重新决策。
 健康风险独立于主意图保留；没有风险金标，因此这些检查证明门控行为，而不证明风险识别准确率。
 
@@ -49,5 +49,5 @@ python scripts/report_online.py deliverables/qwen-v2-eval-20260906
 ```
 
 首次小样本/全量运行会调用模型；同一输出目录自动跳过已完成场景。生产源码或数据指纹变化时必须使用新的 --output 目录。离线复核与报告生成不调用API。
-完整指标及最小逐项预测见 data/online_evaluation_v2.json；低分原因与修改说明见 [ONLINE_EVALUATION_ANALYSIS.md](ONLINE_EVALUATION_ANALYSIS.md)。
+完整指标及最小逐项预测见 data/online_evaluation_v2.json；公开报告仅保留冻结版本的评测口径与结果。
 本次生产代码与数据指纹：`471a9faf788a01dd505e165ab98a238d5fca7110f3e5927313e808f6b25aef0c`。

@@ -2,6 +2,7 @@ import json
 import unittest
 from pathlib import Path
 from src.engine import analyze, detect_risk, guard_reply, snapshot
+from scripts.evaluate_challenge import validate_expected
 
 
 def session(text, ticket=None):
@@ -9,6 +10,9 @@ def session(text, ticket=None):
         {'id': 'm1', 'role': '买家', 'text': text, 'time': '2026-05-01 10:00:00', 'seq': 1},
         {'id': 'm2', 'role': '客服', 'text': '已经退款成功', 'time': '2026-05-01 11:00:00', 'seq': 2}],
         'orders': [], 'tickets': [ticket] if ticket else []}
+
+
+ROOT = Path(__file__).resolve().parents[1]
 
 
 class EngineTests(unittest.TestCase):
@@ -112,6 +116,27 @@ class EngineTests(unittest.TestCase):
         item = analyze(s, 1)['service_item']
         self.assertTrue(item['known_facts'])
         self.assertNotIn('关联订单或可查询单号', item['to_verify'])
+
+    def test_challenge_risk_gold_includes_valid_risk_type(self):
+        data = json.loads((ROOT / 'data/challenge_set.json').read_text(encoding='utf-8'))
+        for case in data['cases']:
+            expected = case['expected']
+            with self.subTest(case=case['id']):
+                self.assertIn('risk_type', expected)
+                if expected['risk_state'] is None:
+                    self.assertIsNone(expected['risk_type'])
+                else:
+                    self.assertIn(expected['risk_type'], ('health', 'complaint'))
+
+    def test_challenge_evaluator_rejects_unknown_or_missing_risk_type(self):
+        invalid = [
+            {'id': 'missing', 'expected': {'risk_state': '实际发生'}},
+            {'id': 'unknown', 'expected': {'risk_type': 'medical', 'risk_state': '实际发生'}},
+            {'id': 'partial', 'expected': {'risk_type': 'health', 'risk_state': None}},
+        ]
+        for case in invalid:
+            with self.subTest(case=case['id']), self.assertRaises(ValueError):
+                validate_expected(case)
 
     def test_all_official_replay_risks_have_visible_evidence(self):
         data = json.loads((Path(__file__).parents[1] / 'data/dataset.json').read_text(encoding='utf-8'))

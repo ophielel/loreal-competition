@@ -26,6 +26,8 @@ class ApiTests(unittest.TestCase):
         self.assertEqual(len(data['session']['messages']), 1)
         self.assertEqual(data['session']['tickets'], [])
         self.assertNotIn('label', data['session'])
+        self.assertEqual(data['analysis']['mode'], 'rules')
+        self.assertNotIn('model_error', data['analysis'])
 
     def test_out_of_range_returns_400(self):
         with self.assertRaises(HTTPError) as cm:

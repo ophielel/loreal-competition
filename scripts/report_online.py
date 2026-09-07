@@ -54,7 +54,7 @@ def main(out):
               '模型原始意图在校验前计分；无买家消息时按待确认处理。Hybrid包含业务依据仲裁和校验失败回退。',
               '校验失败原因：' + json.dumps(dict(reasons), ensure_ascii=False), '',
               '## 小样本与健康门控', '',
-              '小样本采用固定每类2个会话，名单记录于评测数据的pilot_session_ids；此次验证记录见低分原因分析。',
+              '小样本采用固定每类2个会话，名单记录于评测数据的 pilot_session_ids。',
               '合成回归测试覆盖未来ID、客服单独引用、空字段、长度边界、标签隔离、健康分流/回复及缓存重新决策。全量记录通过原适配器离线回放，请求、意图、风险、回复和用量一致。',
               '健康风险独立于主意图保留；没有风险金标，因此这些检查证明门控行为，而不证明风险识别准确率。', '',
               '## 历史同模型子集参照', '']
@@ -82,7 +82,7 @@ def main(out):
               'python scripts/verify_online.py deliverables/qwen-v2-eval-20260906',
               'python scripts/report_online.py deliverables/qwen-v2-eval-20260906', '```', '',
               '首次小样本/全量运行会调用模型；同一输出目录自动跳过已完成场景。生产源码或数据指纹变化时必须使用新的 --output 目录。离线复核与报告生成不调用API。',
-              '完整指标及最小逐项预测见 data/online_evaluation_v2.json；低分原因与修改说明见 [ONLINE_EVALUATION_ANALYSIS.md](ONLINE_EVALUATION_ANALYSIS.md)。',
+              '完整指标及最小逐项预测见 data/online_evaluation_v2.json；公开报告仅保留冻结版本的评测口径与结果。',
               f"本次生产代码与数据指纹：`{summary['fingerprint']}`。"]
     (ROOT/'docs/ONLINE_EVALUATION.md').write_text('\n'.join(lines)+'\n', encoding='utf-8')
     (ROOT/'data/online_evaluation_v2.json').write_text(json.dumps(result, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')

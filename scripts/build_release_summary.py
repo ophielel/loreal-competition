@@ -46,7 +46,7 @@ def main():
     browser_path=ROOT/'deliverables/browser-checks.json'
     browser=json.loads(browser_path.read_text(encoding='utf-8')) if browser_path.exists() else {'passed':0}
     test_count=unittest.defaultTestLoader.discover(str(ROOT/'tests')).countTestCases()
-    summary={'version':'1.2.0-rc1','date':'2026-09-07',
+    summary={'version':'1.2.0','status':'frozen','date':'2026-09-07',
              'official_dataset':{'sessions':dataset['meta']['sessions'],'messages':dataset['meta']['counts']['聊天记录'],
                                  'orders':dataset['meta']['counts']['订单'],
                                  'tickets':sum(v for k,v in dataset['meta']['counts'].items() if k.endswith('工单'))},
@@ -54,7 +54,7 @@ def main():
                  'valid_responses':online['valid_responses'],'note':'保存的真实 Qwen 输出按当前规则/Hybrid 意图决策离线重放；未再次发起网络调用'},
              'official_dev_metrics':scenarios,'challenge_metrics':challenge['metrics'],
              'python_test_count':test_count,'browser_check_count':browser.get('passed',0),
-             'artifacts_note':'生成交付物前以本文件为唯一版本与指标来源'}
+             'artifacts_note':'最终回归通过；本版本冻结，不再增加功能'}
     (ROOT/'data/release_summary.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2),encoding='utf-8')
     print(json.dumps({'version':summary['version'],'metrics':scenarios,'tests':[test_count,browser.get('passed',0)]},ensure_ascii=False))
 if __name__=='__main__':main()

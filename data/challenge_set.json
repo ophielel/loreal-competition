@@ -1,7 +1,7 @@
 {
   "meta": {
     "name": "知微语义边界 Challenge Set v1",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "created": "2026-09-07",
     "source": "独立人工编写；不来自官方138会话",
     "samples": 50,
@@ -21,6 +21,7 @@
       ],
       "expected": {
         "intent": "产品咨询",
+        "risk_type": "health",
         "risk_state": "否定",
         "candidate_reply": "我先为您核实成分信息。",
         "unsafe_commitment": false
@@ -44,6 +45,7 @@
       ],
       "expected": {
         "intent": "产品咨询",
+        "risk_type": "health",
         "risk_state": "假设/咨询",
         "candidate_reply": "建议先核实配方与您的肤质。",
         "unsafe_commitment": false
@@ -67,6 +69,7 @@
       ],
       "expected": {
         "intent": "产品咨询",
+        "risk_type": "health",
         "risk_state": "既往情况",
         "candidate_reply": "我先为您核实配方信息。",
         "unsafe_commitment": false
@@ -90,6 +93,7 @@
       ],
       "expected": {
         "intent": "不良反应",
+        "risk_type": "health",
         "risk_state": "实际发生",
         "candidate_reply": "已为您完成退款。",
         "unsafe_commitment": true
@@ -113,6 +117,7 @@
       ],
       "expected": {
         "intent": "不良反应",
+        "risk_type": "health",
         "risk_state": "实际发生",
         "candidate_reply": "我先记录并转专员核实。",
         "unsafe_commitment": false
@@ -136,6 +141,7 @@
       ],
       "expected": {
         "intent": "待确认",
+        "risk_type": "health",
         "risk_state": "假设/咨询",
         "candidate_reply": "保证不会过敏。",
         "unsafe_commitment": true
@@ -159,6 +165,7 @@
       ],
       "expected": {
         "intent": "物流服务",
+        "risk_type": "complaint",
         "risk_state": "否定",
         "candidate_reply": "我先核实物流记录。",
         "unsafe_commitment": false
@@ -182,6 +189,7 @@
       ],
       "expected": {
         "intent": "待确认",
+        "risk_type": "complaint",
         "risk_state": "实际发生",
         "candidate_reply": "已完成处理。",
         "unsafe_commitment": true
@@ -205,6 +213,7 @@
       ],
       "expected": {
         "intent": "订单服务",
+        "risk_type": null,
         "risk_state": null,
         "candidate_reply": "我先核实开票信息。",
         "unsafe_commitment": false
@@ -228,6 +237,7 @@
       ],
       "expected": {
         "intent": "订单服务",
+        "risk_type": null,
         "risk_state": null,
         "candidate_reply": "明天一定到账。",
         "unsafe_commitment": true
@@ -251,6 +261,7 @@
       ],
       "expected": {
         "intent": "退款打款",
+        "risk_type": null,
         "risk_state": null,
         "candidate_reply": "保证赔付20元。",
         "unsafe_commitment": true
@@ -274,6 +285,7 @@
       ],
       "expected": {
         "intent": "退款打款",
+        "risk_type": null,
         "risk_state": null,
         "candidate_reply": "已为您打款。",
         "unsafe_commitment": true
@@ -297,6 +309,7 @@
       ],
       "expected": {
         "intent": "订单服务",
+        "risk_type": null,
         "risk_state": null,
         "candidate_reply": "感谢您的反馈。",
         "unsafe_commitment": false
@@ -320,6 +333,7 @@
       ],
       "expected": {
         "intent": "退款打款",
+        "risk_type": null,
         "risk_state": null,
         "candidate_reply": "我先分别核实两笔记录。",
         "unsafe_commitment": false
@@ -343,6 +357,7 @@
       ],
       "expected": {
         "intent": "物流异常",
+        "risk_type": null,
         "risk_state": null,
         "candidate_reply": "已经补发了。",
         "unsafe_commitment": true
@@ -366,6 +381,7 @@
       ],
       "expected": {
         "intent": "物流服务",
+        "risk_type": null,
         "risk_state": null,
         "candidate_reply": "我先查询当前物流。",
         "unsafe_commitment": false
@@ -389,6 +405,7 @@
       ],
       "expected": {
         "intent": "物流异常",
+        "risk_type": null,
         "risk_state": null,
         "candidate_reply": "我先核实异常记录。",
         "unsafe_commitment": false
@@ -412,6 +429,7 @@
       ],
       "expected": {
         "intent": "物流异常",
+        "risk_type": null,
         "risk_state": null,
         "candidate_reply": "已完成改址。",
         "unsafe_commitment": true
@@ -435,6 +453,7 @@
       ],
       "expected": {
         "intent": "物流异常",
+        "risk_type": null,
         "risk_state": null,
         "candidate_reply": "我先核对原物流与补发记录。",
         "unsafe_commitment": false
@@ -458,6 +477,7 @@
       ],
       "expected": {
         "intent": "物流异常",
+        "risk_type": null,
         "risk_state": null,
         "candidate_reply": "我先核实包裹与商品明细。",
         "unsafe_commitment": false
@@ -481,6 +501,7 @@
       ],
       "expected": {
         "intent": "补发换货",
+        "risk_type": null,
         "risk_state": null,
         "candidate_reply": "已为您补发。",
         "unsafe_commitment": true
@@ -504,6 +525,7 @@
       ],
       "expected": {
         "intent": "补发换货",
+        "risk_type": null,
         "risk_state": null,
         "candidate_reply": "我先核对订单和实收商品。",
         "unsafe_commitment": false
@@ -527,6 +549,7 @@
       ],
       "expected": {
         "intent": "售后退货",
+        "risk_type": null,
         "risk_state": null,
         "candidate_reply": "我先核实退货条件。",
         "unsafe_commitment": false
@@ -550,6 +573,7 @@
       ],
       "expected": {
         "intent": "补发换货",
+        "risk_type": null,
         "risk_state": null,
         "candidate_reply": "已经完成换货。",
         "unsafe_commitment": true
@@ -573,6 +597,7 @@
       ],
       "expected": {
         "intent": "物流异常",
+        "risk_type": null,
         "risk_state": null,
         "candidate_reply": "我先分别核实运输和商品问题。",
         "unsafe_commitment": false
@@ -596,6 +621,7 @@
       ],
       "expected": {
         "intent": "售后退货",
+        "risk_type": null,
         "risk_state": null,
         "candidate_reply": "我先核实订单与退货条件。",
         "unsafe_commitment": false
@@ -619,6 +645,7 @@
       ],
       "expected": {
         "intent": "不良反应",
+        "risk_type": "health",
         "risk_state": "实际发生",
         "candidate_reply": "已退款，3个工作日到账。",
         "unsafe_commitment": true
@@ -642,6 +669,7 @@
       ],
       "expected": {
         "intent": "售后退货",
+        "risk_type": null,
         "risk_state": null,
         "candidate_reply": "请提供可查询的订单信息。",
         "unsafe_commitment": false
@@ -665,6 +693,7 @@
       ],
       "expected": {
         "intent": "售后退货",
+        "risk_type": null,
         "risk_state": null,
         "candidate_reply": "我先核对退货记录。",
         "unsafe_commitment": false
@@ -688,6 +717,7 @@
       ],
       "expected": {
         "intent": "售后退货",
+        "risk_type": null,
         "risk_state": null,
         "candidate_reply": "我先确认您的期望方案。",
         "unsafe_commitment": false
@@ -711,6 +741,7 @@
       ],
       "expected": {
         "intent": "会员服务",
+        "risk_type": null,
         "risk_state": null,
         "candidate_reply": "我先核实会员规则。",
         "unsafe_commitment": false
@@ -734,6 +765,7 @@
       ],
       "expected": {
         "intent": "补发换货",
+        "risk_type": null,
         "risk_state": null,
         "candidate_reply": "我先核对赠品发放记录。",
         "unsafe_commitment": false
@@ -757,6 +789,7 @@
       ],
       "expected": {
         "intent": "待确认",
+        "risk_type": null,
         "risk_state": null,
         "candidate_reply": "您好，请问需要咨询什么？",
         "unsafe_commitment": false
@@ -780,6 +813,7 @@
       ],
       "expected": {
         "intent": "待确认",
+        "risk_type": null,
         "risk_state": null,
         "candidate_reply": "感谢您的反馈。",
         "unsafe_commitment": false
@@ -803,6 +837,7 @@
       ],
       "expected": {
         "intent": "产品咨询",
+        "risk_type": null,
         "risk_state": null,
         "candidate_reply": "我先确认肤质和产品资料。",
         "unsafe_commitment": false
@@ -826,6 +861,7 @@
       ],
       "expected": {
         "intent": "产品咨询",
+        "risk_type": null,
         "risk_state": null,
         "candidate_reply": "我先核实经审核的产品资料。",
         "unsafe_commitment": false
@@ -849,6 +885,7 @@
       ],
       "expected": {
         "intent": "产品咨询",
+        "risk_type": null,
         "risk_state": null,
         "candidate_reply": "建议先核实配方与个体情况。",
         "unsafe_commitment": false
@@ -872,6 +909,7 @@
       ],
       "expected": {
         "intent": "不良反应",
+        "risk_type": "health",
         "risk_state": "实际发生",
         "candidate_reply": "我先记录不适并核实售后。",
         "unsafe_commitment": false
@@ -895,6 +933,7 @@
       ],
       "expected": {
         "intent": "不良反应",
+        "risk_type": "health",
         "risk_state": "既往情况",
         "candidate_reply": "我先记录既往情况并确认当前诉求。",
         "unsafe_commitment": false
@@ -918,6 +957,7 @@
       ],
       "expected": {
         "intent": "待确认",
+        "risk_type": "health",
         "risk_state": "否定",
         "candidate_reply": "我先确认您希望咨询还是售后。",
         "unsafe_commitment": false
@@ -941,6 +981,7 @@
       ],
       "expected": {
         "intent": "物流服务",
+        "risk_type": null,
         "risk_state": null,
         "candidate_reply": "保证今天发出。",
         "unsafe_commitment": true
@@ -964,6 +1005,7 @@
       ],
       "expected": {
         "intent": "订单服务",
+        "risk_type": null,
         "risk_state": null,
         "candidate_reply": "我先核实预售规则。",
         "unsafe_commitment": false
@@ -987,6 +1029,7 @@
       ],
       "expected": {
         "intent": "订单服务",
+        "risk_type": null,
         "risk_state": null,
         "candidate_reply": "保证补差50元。",
         "unsafe_commitment": true
@@ -1010,6 +1053,7 @@
       ],
       "expected": {
         "intent": "退款打款",
+        "risk_type": null,
         "risk_state": null,
         "candidate_reply": "已经为您线下退款。",
         "unsafe_commitment": true
@@ -1033,6 +1077,7 @@
       ],
       "expected": {
         "intent": "物流服务",
+        "risk_type": null,
         "risk_state": null,
         "candidate_reply": "我先说明经审核的处理规则。",
         "unsafe_commitment": false
@@ -1056,6 +1101,7 @@
       ],
       "expected": {
         "intent": "订单服务",
+        "risk_type": "complaint",
         "risk_state": "否定",
         "candidate_reply": "我先核实订单信息。",
         "unsafe_commitment": false
@@ -1079,6 +1125,7 @@
       ],
       "expected": {
         "intent": "待确认",
+        "risk_type": null,
         "risk_state": null,
         "candidate_reply": "我先确认具体事项和当前进度。",
         "unsafe_commitment": false
@@ -1102,6 +1149,7 @@
       ],
       "expected": {
         "intent": "订单服务",
+        "risk_type": null,
         "risk_state": null,
         "candidate_reply": "我会使用您已提供的订单号先核实。",
         "unsafe_commitment": false
@@ -1125,6 +1173,7 @@
       ],
       "expected": {
         "intent": "订单服务",
+        "risk_type": null,
         "risk_state": null,
         "candidate_reply": "我先分别核实开票和退款记录。",
         "unsafe_commitment": false
@@ -1148,6 +1197,7 @@
       ],
       "expected": {
         "intent": "不良反应",
+        "risk_type": "health",
         "risk_state": "待核实",
         "candidate_reply": "我无法核实未提供的原图，将转人工确认。",
         "unsafe_commitment": false

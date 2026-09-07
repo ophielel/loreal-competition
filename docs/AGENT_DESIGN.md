@@ -31,11 +31,11 @@
 | 方法 | 路径 | 作用 |
 |---|---|---|
 | GET | /api/overview | 官方统计、首条消息分流列表、是否配置模型（不返回密钥） |
-| GET | /api/session?id=S00010&cursor=1 | 当前消息快照、默认 Qwen + Hybrid 分析；失败时安全回退 |
+| GET | /api/session?id=S00010&cursor=1 | 立即返回当前消息快照与规则安全基线；前端随后异步请求 Hybrid |
 | GET | /api/tasks | 本地任务列表 |
 | GET | /api/evaluation | 规则诊断评估 |
 | POST | /api/model/config | `{api_key,model,base_url}`；只写入服务进程内存，响应不返回密钥 |
-| POST | /api/analyze | `{id,cursor}`；手动重试 Qwen + Hybrid，失败安全回退并附 model_error |
+| POST | /api/analyze | `{id,cursor}`；前端自动异步增强或手动重试 Qwen + Hybrid，失败安全回退并附 model_error |
 | POST | /api/tasks | `{id,cursor,title,note}`；幂等创建本地任务 |
 | POST | /api/tasks/complete | `{task_id}`；标记本地任务完成 |
 

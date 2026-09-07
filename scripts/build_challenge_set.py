@@ -64,10 +64,14 @@ CASES = [
 def main():
     rows=[]
     for i,(text,intent,state,reply,unsafe) in enumerate(CASES,1):
+        # Risk type is an explicit gold field; state alone must not let the wrong
+        # detector receive credit. C007/C008/C046 are complaint boundaries.
+        risk_type = None if state is None else ('complaint' if i in (7, 8, 46) else 'health')
         rows.append({'id':f'C{i:03d}','messages':[{'id':f'C{i:03d}-m1','role':'买家','text':text,'time':'2026-09-01 10:00:00','seq':1}],
-                     'expected':{'intent':intent,'risk_state':state,'candidate_reply':reply,'unsafe_commitment':unsafe},
+                     'expected':{'intent':intent,'risk_type':risk_type,'risk_state':state,
+                                 'candidate_reply':reply,'unsafe_commitment':unsafe},
                      'review':{'status':'人工审核','reviewers':1,'note':'按业务定义与可见文本逐条检查'}})
-    payload={'meta':{'name':'知微语义边界 Challenge Set v1','version':'1.0.0','created':'2026-09-07',
+    payload={'meta':{'name':'知微语义边界 Challenge Set v1','version':'1.1.0','created':'2026-09-07',
                      'source':'独立人工编写；不来自官方138会话','samples':len(rows),'frozen':True},'cases':rows}
     (ROOT/'data/challenge_set.json').write_text(json.dumps(payload,ensure_ascii=False,indent=2),encoding='utf-8')
     print(f'wrote {len(rows)} cases')

@@ -22,7 +22,7 @@ python server.py --port 8765
 - **归档快照**显式展示官方表格最终订单、工单与历史对话，支持事后复盘；不把归档记录伪装成实时信息。
 - 回复建议可编辑、可本地模拟发送；跟进任务人工确认后保存到 SQLite，重复创建自动去重，可标记完成。
 - 当前快照导出 JSON；统计看板与可重跑的规则评估。
-- 默认 Qwen + Hybrid：最小上下文、JSON 与证据校验、语义风险门控、内存缓存、实际 token 与延迟显示；未配置、调用失败或校验失败时明确显示“已安全回退”。
+- 默认 Qwen + Hybrid：会话与回放先即时呈现安全基线，再由前端按快照自动异步增强，模型等待不阻塞操作；包含最小上下文、JSON 与证据校验、语义风险门控、内存缓存、实际 token 与延迟显示。
 - 顶栏提供 Qwen 配置入口。API Key 只保存在服务进程内存，不写入浏览器存储、文件或日志，服务重启后清除。
 
 ## Qwen + Hybrid 配置
@@ -36,7 +36,7 @@ $env:QWEN_BASE_URL = 'https://dashscope.aliyuncs.com/compatible-mode/v1'
 python server.py --port 8766
 ```
 
-地域与业务空间地址以阿里云控制台为准。配置完成后，会话分析默认调用 Qwen + Hybrid；右侧“重新分析”可手动重试。不要将密钥写入源码或提交包。接口不可用或输出不合法时，规则只作为最差兜底，并明确标识“已安全回退”。
+地域与业务空间地址以阿里云控制台为准。配置完成后，Qwen + Hybrid 仍是正常模式：切换会话或回放点会先显示安全基线，并在后台自动增强；右侧“重新分析”可手动重试。不要将密钥写入源码或提交包。接口不可用或输出不合法时，规则只作为最差兜底，并明确标识“已安全回退”。
 
 ## 数据与评估
 
@@ -59,7 +59,7 @@ python server.py --port 8766
 
 ### 评测边界与复现
 
-数据为官方同源 MOCK 开发数据，**不是独立测试集，也不代表生产环境泛化**。另建的 50 条人工审核 Challenge Set 与官方数据分开保存，当前报告针对 Rules + Safety Gate（未调用 Qwen）：Intent 88.00%，Risk Recall 100.00%、Risk False Positive 0.00%、Evidence Support 100.00%、Unsafe Commitment Recall 100.00%、安全回复误拦截 0.00%。这些是小型边界回归结果，不是生产结论。详见 [Challenge Set 报告](docs/CHALLENGE_EVALUATION.md)。
+数据为官方同源 MOCK 开发数据，**不是独立测试集，也不代表生产环境泛化**。另建的 50 条人工审核 Challenge Set 与官方数据分开保存，当前报告针对 Rules + Safety Gate（未调用 Qwen），并同时校验风险 `risk_type`、语义状态与证据引用：Intent 88.00%，Risk Type Accuracy 100.00%、Risk Recall 100.00%、Risk False Positive 0.00%、Evidence Support 100.00%、Unsafe Commitment Recall 100.00%、安全回复误拦截 0.00%。这些是小型边界回归结果，不是生产结论。详见 [Challenge Set 报告](docs/CHALLENGE_EVALUATION.md)。
 
 详见 [在线评测报告](docs/ONLINE_EVALUATION.md) 和用于复核指标的精简记录 `data/qwen_evaluation_summary.json`。原始请求、失败尝试与开发分析不进入比赛提交包。
 
@@ -89,9 +89,9 @@ python scripts/build_deliverables.py
 - docs/EVALUATION.md、docs/CHALLENGE_EVALUATION.md、deliverables/browser-checks.json：评估与验证记录。
 - data/release_summary.json：版本、Rules/Qwen/Hybrid 指标与测试数量的统一来源。
 
-## 后续待完成事项
+## 冻结状态
 
-队伍名称仍为待填写；Qwen 接口已完成在线实测，后续需改进意图分类和输出校验通过率，并补充独立标注集验证；正式提交前需按个人账号页面核对文件大小与格式限制。本项目未报名或向天池提交任何文件，也未连接真实千牛、物流或支付系统。
+当前版本完成最终回归后冻结，不再增加功能。队伍名称仍为待填写；正式提交前仅需按个人账号页面核对文件大小与格式限制。本项目未报名或向天池提交任何文件，也未连接真实千牛、物流或支付系统。
 
 ## 来源
 
