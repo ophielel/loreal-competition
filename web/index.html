@@ -39,7 +39,8 @@
       </div>
       <div class="top-actions">
         <span class="muted"><b id="session-count">—</b> 个会话</span>
-        <span class="pill green" id="mode-label">规则模式 · 可离线使用</span>
+        <span class="pill gold" id="mode-label">Qwen 未配置 · 已安全回退</span>
+        <button id="config-button" class="text-button">配置 Qwen</button>
         <button id="about-button" class="text-button">使用说明</button>
       </div>
     </header>
@@ -112,7 +113,7 @@
         <div id="copilot-content" class="copilot-content" role="tabpanel"></div>
         <footer class="copilot-footer">
           <span id="analysis-mode">规则基线 · 需人工复核</span>
-          <button id="model-button" class="text-button">Qwen 分析 ↗</button>
+          <button id="model-button" class="text-button">重新分析 ↻</button>
         </footer>
       </aside>
 
@@ -122,6 +123,23 @@
   </div>
 
   <div id="toast" role="status" class="toast" hidden></div>
+
+  <dialog id="model-dialog">
+    <form id="model-form">
+      <div class="dialog-header">
+        <h2>配置 Qwen + Hybrid</h2>
+        <button type="button" id="close-model-dialog" aria-label="关闭">×</button>
+      </div>
+      <p class="muted">API Key 仅保存在当前服务进程内存，不写入浏览器存储、文件或日志；服务重启后需重新填写。</p>
+      <label for="model-api-key">DashScope API Key</label>
+      <input id="model-api-key" type="password" autocomplete="off" maxlength="500" required placeholder="sk-…">
+      <label for="model-name">模型</label>
+      <input id="model-name" maxlength="100" required value="qwen3.7-flash-2026-07-15">
+      <label for="model-base-url">API 地址</label>
+      <input id="model-base-url" type="url" maxlength="500" required value="https://dashscope.aliyuncs.com/compatible-mode/v1">
+      <button type="submit" class="primary">保存到内存并启用 Hybrid</button>
+    </form>
+  </dialog>
 
   <dialog id="task-dialog">
     <form id="task-form">

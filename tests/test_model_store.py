@@ -7,10 +7,14 @@ from unittest.mock import patch
 from src.model import validate, enhance
 from src.model import CACHE
 from src.engine import analyze
-from src import store
+from src import model, store
 
 
 class ModelAndStoreTests(unittest.TestCase):
+    def tearDown(self):
+        model.RUNTIME_CONFIG = None
+        CACHE.clear()
+
     def fake_session(self):
         return {'id':'S1','buyer':'测试','messages':[{'id':'m1','role':'买家','text':'用了面膜后发红','time':'2026-01-01 10:00:00','seq':1}], 'orders':[], 'tickets':[]}
 
@@ -53,6 +57,14 @@ class ModelAndStoreTests(unittest.TestCase):
     def test_no_key_has_explicit_fallback(self):
         with patch.dict('os.environ', {}, clear=True):
             self.assertIn('model_error', enhance({}, 1, {'mode': 'rules'}))
+
+    def test_runtime_configuration_keeps_key_private(self):
+        model.configure('sk-memory-only', 'qwen-plus', 'https://example.com/v1')
+        public = model.public_config()
+        self.assertTrue(public['configured'])
+        self.assertEqual(public['key_source'], 'memory')
+        self.assertNotIn('api_key', public)
+        self.assertNotIn('sk-memory-only', json.dumps(public))
 
     def test_task_dedup_and_persistence(self):
         with tempfile.TemporaryDirectory() as d, patch.object(store, 'DB', Path(d) / 'test.sqlite'):

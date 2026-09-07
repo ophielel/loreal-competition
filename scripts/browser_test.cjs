@@ -24,7 +24,12 @@ const wait = async (page, ms=3500) => { if (record) await page.waitForTimeout(ms
   page.on('response',r=>{if(r.status()>=400) errors.push(`${r.status()} ${r.url()}`);});
   await page.goto(base);
   await page.locator('.risk-card').first().waitFor();
-  assert.equal(await page.locator('.session-item').count(),138); results.push('138 sessions render');
+  await page.getByText('Qwen 未配置 · 已安全回退',{exact:true}).waitFor();
+  assert.equal(await page.locator('.session-item').count(),138); results.push('138 sessions render with explicit safe fallback');
+  await page.getByRole('button',{name:'配置 Qwen'}).click();
+  await page.getByRole('heading',{name:'配置 Qwen + Hybrid'}).waitFor();
+  assert.equal(await page.getByLabel('DashScope API Key').getAttribute('type'),'password');
+  await page.getByRole('button',{name:'关闭',exact:true}).click();results.push('in-memory Qwen configuration entry is explicit');
   await page.screenshot({path:path.join(out,'01-workspace.png')}); await wait(page,6500);
   await page.getByRole('button',{name:'高关注',exact:true}).click();
   assert.ok(await page.locator('.session-item').count()>0); results.push('risk filter works'); await wait(page);
@@ -71,8 +76,8 @@ const wait = async (page, ms=3500) => { if (record) await page.waitForTimeout(ms
   await page.getByRole('button',{name:'确认创建本地任务'}).click();
   await page.getByText('已创建本地跟进任务；相同任务自动去重',{exact:true}).waitFor();
   await page.getByRole('button',{name:'跟进任务',exact:true}).click();
-  await page.getByRole('heading',{name:new RegExp(taskTitle)}).waitFor();await wait(page);
-  const task=page.locator('.task-item').filter({hasText:taskTitle});
+  await page.getByRole('heading',{name:new RegExp('^'+taskTitle)}).waitFor();await wait(page);
+  const task=page.locator('.task-item').filter({has:page.getByRole('heading',{name:new RegExp('^'+taskTitle)})}).first();
   if(await task.getByRole('button',{name:'标记完成'}).count())await task.getByRole('button',{name:'标记完成'}).click();
   await task.getByText('已完成',{exact:true}).waitFor();results.push('task creation and completion persist');
   await page.screenshot({path:path.join(out,'05-tasks.png')});await wait(page,5000);
@@ -81,8 +86,8 @@ const wait = async (page, ms=3500) => { if (record) await page.waitForTimeout(ms
   assert.equal(await page.locator('tbody tr').count(),10);results.push('evaluation panel renders all classes');
   await page.screenshot({path:path.join(out,'06-evaluation.png')});await wait(page,6500);
   await page.getByRole('button',{name:'接待工作台',exact:true}).click();
-  await page.getByRole('button',{name:'Qwen 分析 ↗'}).click();
-  await page.locator('.error-box').waitFor();results.push('no-key fallback is visible');await wait(page,4500);
+  await page.getByRole('button',{name:'重新分析 ↻'}).click();
+  await page.locator('.error-box').waitFor();results.push('no-key fallback is visibly safe');await wait(page,4500);
   const downloadPromise=page.waitForEvent('download');
   await page.getByRole('button',{name:'导出记录 ↓'}).click();
   const download=await downloadPromise;

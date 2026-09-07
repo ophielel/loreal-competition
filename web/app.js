@@ -175,10 +175,10 @@ function renderCopilot() {
   const a = state.data.analysis;
   const s = state.data.session;
   $('#analysis-mode').textContent = a.mode === 'qwen'
-    ? `${a.model} · ${a.cache_hit ? '缓存命中' : a.call_tokens + ' tokens'}`
-    : '本地规则 · 建议需人工复核';
+    ? `Qwen + Hybrid · ${a.model} · ${a.cache_hit ? '缓存命中' : a.call_tokens + ' tokens'}`
+    : `已安全回退 · ${a.model_error_code === 'invalid_output' ? '输出校验失败' : a.model_error_code === 'request_failed' ? '调用失败' : a.model_error_code === 'no_buyer_evidence' ? '当前无买家证据' : a.model_error_code === 'invalid_config' ? '模型配置无效' : 'Qwen 未配置'}`;
   $('#model-button').disabled = state.modelBusy;
-  $('#model-button').textContent = state.modelBusy ? '正在分析…' : 'Qwen 分析 ↗';
+  $('#model-button').textContent = state.modelBusy ? '正在分析…' : '重新分析 ↻';
   if (state.tab === 'journey') return renderJourney(s);
   renderInsight(a, s);
 }
@@ -322,7 +322,7 @@ function metricsViewHtml(v) {
         <small>同源 MOCK 诊断集，非独立测试集</small></div>
     </div>
     ${challenge ? `<section class="data-panel"><h3>独立 Challenge Set <span class="count">50</span></h3>
-      <p class="muted">人工编写语义边界集，与官方 138 会话分开；版本 ${e(release.version)}。</p>
+      <p class="muted">人工编写语义边界集，与官方 138 会话分开；以下为 Rules + Safety Gate 回归，不是 Qwen 指标；版本 ${e(release.version)}。</p>
       <div class="summary-tags">${pill('Intent ' + (challenge.intent_accuracy*100).toFixed(1) + '%','green')}
         ${pill('Risk Recall ' + (challenge.risk_recall*100).toFixed(1) + '%','green')}
         ${pill('Evidence ' + (challenge.evidence_support_rate*100).toFixed(1) + '%','green')}
@@ -341,7 +341,7 @@ function aboutViewHtml() {
       <p>④ 「创建跟进」经确认后写入本机 SQLite，在跟进页可查看与标记完成。</p>
     </section>
     <section class="data-panel"><h3>说明</h3>
-      <p>默认离线规则分析。配置服务端环境变量 DASHSCOPE_API_KEY（可选 QWEN_BASE_URL、QWEN_MODEL）并重启后，可点击「Qwen 分析」；失败时明确降级，不伪称模型结果。</p>
+      <p>产品默认使用 Qwen + Hybrid。可点击顶栏「配置 Qwen」将 API Key 与模型参数只保存到服务进程内存；也可在启动前设置 DASHSCOPE_API_KEY、QWEN_BASE_URL、QWEN_MODEL。未配置、调用失败或输出校验失败时明确显示“已安全回退”，规则仅作为最差兜底。</p>
       <p>本页面为官方虚构数据的本地竞赛 Demo，未连接真实千牛、支付或物流系统。
         <a href="https://tianchi.aliyun.com/competition/entrance/532503/information" target="_blank" rel="noreferrer">官方赛题 ↗</a></p>
     </section>`;
@@ -453,14 +453,44 @@ $('#prev').onclick = () => loadSession(state.id, Math.max(1, state.cursor - 1));
 $('#next').onclick = () => loadSession(state.id, Math.min(state.total, state.cursor + 1));
 $('#show-all').onclick = () => loadSession(state.id, state.total);
 $('#archive').onclick = () => loadSession(state.id, state.total + 1);
-$('#cursor').addEventListener('input', () => loadSession(state.id, Number($('#cursor').value)));
+$('#cursor').addEventListener('change', () => loadSession(state.id, Number($('#cursor').value)));
 $('#about-button').onclick = () => switchView('about');
+$('#config-button').onclick = () => {
+  const config = state.overview?.model_config || {};
+  $('#model-name').value = config.model || 'qwen3.7-flash-2026-07-15';
+  $('#model-base-url').value = config.base_url || 'https://dashscope.aliyuncs.com/compatible-mode/v1';
+  $('#model-api-key').value = '';
+  $('#model-dialog').showModal();
+  $('#model-api-key').focus();
+};
+$('#close-model-dialog').onclick = () => $('#model-dialog').close();
 $('#close-dialog').onclick = () => $('#task-dialog').close();
 $('#reply').addEventListener('input', () => { state.drafts[state.id] = $('#reply').value; });
 $('#reply').addEventListener('keydown', (event) => {
   if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') sendReply();
 });
 $('#send').onclick = sendReply;
+
+$('#model-form').addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const submit = event.submitter;
+  submit.disabled = true;
+  try {
+    const config = await api('/api/model/config', {
+      api_key: $('#model-api-key').value,
+      model: $('#model-name').value,
+      base_url: $('#model-base-url').value,
+    });
+    state.overview.model_configured = true;
+    state.overview.model_config = config;
+    $('#mode-label').className = 'pill green';
+    $('#mode-label').textContent = `Qwen + Hybrid · ${config.model}`;
+    $('#model-dialog').close();
+    await loadSession(state.id, state.cursor);
+    toast('Qwen + Hybrid 已启用；Key 仅保存在服务进程内存');
+  } catch (err) { toast(err.message); }
+  finally { submit.disabled = false; }
+});
 
 $('#task-form').addEventListener('submit', async (event) => {
   event.preventDefault();
@@ -522,7 +552,13 @@ $('#export-button').onclick = () => {
   try {
     state.overview = await api('/api/overview');
     $('#session-count').textContent = state.overview.meta.sessions;
-    if (state.overview.model_configured) $('#mode-label').textContent = 'Qwen 已配置 · 点击触发';
+    if (state.overview.model_configured) {
+      $('#mode-label').className = 'pill green';
+      $('#mode-label').textContent = `Qwen + Hybrid · ${state.overview.model_config.model}`;
+    } else {
+      $('#mode-label').className = 'pill gold';
+      $('#mode-label').textContent = 'Qwen 未配置 · 已安全回退';
+    }
     await loadSession(state.id, 1);
   } catch (err) {
     $('#session-list').innerHTML =

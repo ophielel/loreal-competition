@@ -125,13 +125,32 @@ class HybridContractTests(unittest.TestCase):
         self.assertEqual(value['intent'], baseline['intent'])
         self.assertIn('model_error', value)
 
+    def test_model_health_intent_cannot_upgrade_non_current_semantics(self):
+        examples = [
+            ('我没有过敏，只想问面霜成分', '否定'),
+            ('这款精华会不会引起过敏？', '假设/咨询'),
+            ('以前有过敏史，现在只是咨询成分', '既往情况'),
+        ]
+        for text, semantic_state in examples:
+            CACHE.clear()
+            s = session(text)
+            baseline = analyze(s, 1)
+            self.assertEqual(baseline['risk_signals'][0]['semantic_state'], semantic_state)
+            with self.subTest(state=semantic_state), patch('src.model.urlopen', return_value=wire(response(
+                    intent='不良反应', evidence_ids=['b1'], intent_evidence_ids=['b1']))):
+                value = enhance(s, 1, baseline)
+                self.assertNotEqual(value['priority'], '高')
+                self.assertFalse(any(r.get('risk_type') == 'model_health' for r in value['risks']))
+                self.assertIn('未升级当前风险', value['uncertainty'])
+
     def test_cache_reapplies_health_routing_to_current_baseline(self):
         s = session('这款面霜适合什么肤质？')
         baseline = analyze(s, 1)
         guarded = deepcopy(baseline)
         guarded.update(priority='高', action=POLICIES['不良反应'][0],
                        guard=POLICIES['不良反应'][1], reply=POLICIES['不良反应'][2])
-        guarded['risks'].append({'title': '使用不适需优先关注', 'level': '高',
+        guarded['risks'].append({'risk_type': 'health', 'title': '使用不适需优先关注',
+                                 'semantic_state': '实际发生', 'actionable': True, 'level': '高',
                                  'detail': '需核实', 'evidence_ids': ['b1']})
         with patch('src.model.urlopen', return_value=wire(response())) as request:
             enhance(s, 1, baseline)

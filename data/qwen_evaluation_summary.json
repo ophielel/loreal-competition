@@ -1,0 +1,1939 @@
+{
+  "model": "qwen3.7-flash-2026-07-15",
+  "completed": 276,
+  "valid_responses": 270,
+  "records": [
+    {
+      "id": "S00004",
+      "scenario": "first_message",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00004",
+      "scenario": "full_conversation",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00011",
+      "scenario": "first_message",
+      "label": "物流异常",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00011",
+      "scenario": "full_conversation",
+      "label": "物流异常",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00014",
+      "scenario": "full_conversation",
+      "label": "物流服务",
+      "qwen_raw": "物流服务",
+      "valid": true
+    },
+    {
+      "id": "S00016",
+      "scenario": "first_message",
+      "label": "订单服务",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00016",
+      "scenario": "full_conversation",
+      "label": "订单服务",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00025",
+      "scenario": "first_message",
+      "label": "产品咨询",
+      "qwen_raw": "待确认",
+      "valid": true
+    },
+    {
+      "id": "S00025",
+      "scenario": "full_conversation",
+      "label": "产品咨询",
+      "qwen_raw": "产品咨询",
+      "valid": true
+    },
+    {
+      "id": "S00026",
+      "scenario": "first_message",
+      "label": "售后退货",
+      "qwen_raw": "售后退货",
+      "valid": true
+    },
+    {
+      "id": "S00026",
+      "scenario": "full_conversation",
+      "label": "售后退货",
+      "qwen_raw": "售后退货",
+      "valid": true
+    },
+    {
+      "id": "S00027",
+      "scenario": "first_message",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00027",
+      "scenario": "full_conversation",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00038",
+      "scenario": "first_message",
+      "label": "退款打款",
+      "qwen_raw": "退款打款",
+      "valid": true
+    },
+    {
+      "id": "S00038",
+      "scenario": "full_conversation",
+      "label": "退款打款",
+      "qwen_raw": "退款打款",
+      "valid": true
+    },
+    {
+      "id": "S00043",
+      "scenario": "first_message",
+      "label": "物流服务",
+      "qwen_raw": "物流服务",
+      "valid": true
+    },
+    {
+      "id": "S00043",
+      "scenario": "full_conversation",
+      "label": "物流服务",
+      "qwen_raw": "物流服务",
+      "valid": true
+    },
+    {
+      "id": "S00058",
+      "scenario": "first_message",
+      "label": "不良反应",
+      "qwen_raw": "不良反应",
+      "valid": true
+    },
+    {
+      "id": "S00058",
+      "scenario": "full_conversation",
+      "label": "不良反应",
+      "qwen_raw": "不良反应",
+      "valid": true
+    },
+    {
+      "id": "S00059",
+      "scenario": "first_message",
+      "label": "售后退货",
+      "qwen_raw": "售后退货",
+      "valid": true
+    },
+    {
+      "id": "S00059",
+      "scenario": "full_conversation",
+      "label": "售后退货",
+      "qwen_raw": "售后退货",
+      "valid": true
+    },
+    {
+      "id": "S00081",
+      "scenario": "first_message",
+      "label": "订单服务",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00081",
+      "scenario": "full_conversation",
+      "label": "订单服务",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00091",
+      "scenario": "first_message",
+      "label": "产品咨询",
+      "qwen_raw": "待确认",
+      "valid": true
+    },
+    {
+      "id": "S00091",
+      "scenario": "full_conversation",
+      "label": "产品咨询",
+      "qwen_raw": "产品咨询",
+      "valid": true
+    },
+    {
+      "id": "S00106",
+      "scenario": "first_message",
+      "label": "其他服务",
+      "qwen_raw": "其他服务",
+      "valid": true
+    },
+    {
+      "id": "S00106",
+      "scenario": "full_conversation",
+      "label": "其他服务",
+      "qwen_raw": "其他服务",
+      "valid": true
+    },
+    {
+      "id": "S00107",
+      "scenario": "first_message",
+      "label": "物流异常",
+      "qwen_raw": "物流服务",
+      "valid": true
+    },
+    {
+      "id": "S00107",
+      "scenario": "full_conversation",
+      "label": "物流异常",
+      "qwen_raw": "物流服务",
+      "valid": true
+    },
+    {
+      "id": "S00130",
+      "scenario": "first_message",
+      "label": "其他服务",
+      "qwen_raw": "待确认",
+      "valid": true
+    },
+    {
+      "id": "S00130",
+      "scenario": "full_conversation",
+      "label": "其他服务",
+      "qwen_raw": "其他服务",
+      "valid": true
+    },
+    {
+      "id": "S00183",
+      "scenario": "first_message",
+      "label": "退款打款",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00183",
+      "scenario": "full_conversation",
+      "label": "退款打款",
+      "qwen_raw": "退款打款",
+      "valid": true
+    },
+    {
+      "id": "S00268",
+      "scenario": "first_message",
+      "label": "不良反应",
+      "qwen_raw": "不良反应",
+      "valid": true
+    },
+    {
+      "id": "S00268",
+      "scenario": "full_conversation",
+      "label": "不良反应",
+      "qwen_raw": "不良反应",
+      "valid": true
+    },
+    {
+      "id": "S00322",
+      "scenario": "first_message",
+      "label": "会员服务",
+      "qwen_raw": "会员服务",
+      "valid": true
+    },
+    {
+      "id": "S00322",
+      "scenario": "full_conversation",
+      "label": "会员服务",
+      "qwen_raw": "会员服务",
+      "valid": true
+    },
+    {
+      "id": "S00364",
+      "scenario": "first_message",
+      "label": "会员服务",
+      "qwen_raw": "会员服务",
+      "valid": true
+    },
+    {
+      "id": "S00364",
+      "scenario": "full_conversation",
+      "label": "会员服务",
+      "qwen_raw": "会员服务",
+      "valid": true
+    },
+    {
+      "id": "S00014",
+      "scenario": "first_message",
+      "label": "物流服务",
+      "qwen_raw": "待确认",
+      "valid": false
+    },
+    {
+      "id": "S00001",
+      "scenario": "first_message",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00001",
+      "scenario": "full_conversation",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00002",
+      "scenario": "first_message",
+      "label": "产品咨询",
+      "qwen_raw": "待确认",
+      "valid": true
+    },
+    {
+      "id": "S00002",
+      "scenario": "full_conversation",
+      "label": "产品咨询",
+      "qwen_raw": "产品咨询",
+      "valid": true
+    },
+    {
+      "id": "S00003",
+      "scenario": "first_message",
+      "label": "订单服务",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00003",
+      "scenario": "full_conversation",
+      "label": "订单服务",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00005",
+      "scenario": "first_message",
+      "label": "订单服务",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00005",
+      "scenario": "full_conversation",
+      "label": "订单服务",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00006",
+      "scenario": "first_message",
+      "label": "物流异常",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00006",
+      "scenario": "full_conversation",
+      "label": "物流异常",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00007",
+      "scenario": "first_message",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00007",
+      "scenario": "full_conversation",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00008",
+      "scenario": "first_message",
+      "label": "产品咨询",
+      "qwen_raw": "产品咨询",
+      "valid": true
+    },
+    {
+      "id": "S00008",
+      "scenario": "full_conversation",
+      "label": "产品咨询",
+      "qwen_raw": "产品咨询",
+      "valid": true
+    },
+    {
+      "id": "S00009",
+      "scenario": "first_message",
+      "label": "物流异常",
+      "qwen_raw": "物流异常",
+      "valid": true
+    },
+    {
+      "id": "S00009",
+      "scenario": "full_conversation",
+      "label": "物流异常",
+      "qwen_raw": "物流异常",
+      "valid": true
+    },
+    {
+      "id": "S00010",
+      "scenario": "first_message",
+      "label": "不良反应",
+      "qwen_raw": "不良反应",
+      "valid": true
+    },
+    {
+      "id": "S00010",
+      "scenario": "full_conversation",
+      "label": "不良反应",
+      "qwen_raw": "不良反应",
+      "valid": true
+    },
+    {
+      "id": "S00012",
+      "scenario": "first_message",
+      "label": "订单服务",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00012",
+      "scenario": "full_conversation",
+      "label": "订单服务",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00013",
+      "scenario": "first_message",
+      "label": "产品咨询",
+      "qwen_raw": "待确认",
+      "valid": true
+    },
+    {
+      "id": "S00013",
+      "scenario": "full_conversation",
+      "label": "产品咨询",
+      "qwen_raw": "产品咨询",
+      "valid": true
+    },
+    {
+      "id": "S00015",
+      "scenario": "first_message",
+      "label": "不良反应",
+      "qwen_raw": "不良反应",
+      "valid": true
+    },
+    {
+      "id": "S00015",
+      "scenario": "full_conversation",
+      "label": "不良反应",
+      "qwen_raw": "不良反应",
+      "valid": true
+    },
+    {
+      "id": "S00017",
+      "scenario": "first_message",
+      "label": "订单服务",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00017",
+      "scenario": "full_conversation",
+      "label": "订单服务",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00018",
+      "scenario": "first_message",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00018",
+      "scenario": "full_conversation",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00019",
+      "scenario": "first_message",
+      "label": "产品咨询",
+      "qwen_raw": "待确认",
+      "valid": true
+    },
+    {
+      "id": "S00019",
+      "scenario": "full_conversation",
+      "label": "产品咨询",
+      "qwen_raw": "产品咨询",
+      "valid": true
+    },
+    {
+      "id": "S00020",
+      "scenario": "first_message",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00020",
+      "scenario": "full_conversation",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00021",
+      "scenario": "first_message",
+      "label": "订单服务",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00021",
+      "scenario": "full_conversation",
+      "label": "订单服务",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00022",
+      "scenario": "first_message",
+      "label": "产品咨询",
+      "qwen_raw": "待确认",
+      "valid": true
+    },
+    {
+      "id": "S00022",
+      "scenario": "full_conversation",
+      "label": "产品咨询",
+      "qwen_raw": "产品咨询",
+      "valid": true
+    },
+    {
+      "id": "S00023",
+      "scenario": "first_message",
+      "label": "物流异常",
+      "qwen_raw": "物流异常",
+      "valid": true
+    },
+    {
+      "id": "S00023",
+      "scenario": "full_conversation",
+      "label": "物流异常",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00024",
+      "scenario": "first_message",
+      "label": "售后退货",
+      "qwen_raw": "售后退货",
+      "valid": true
+    },
+    {
+      "id": "S00024",
+      "scenario": "full_conversation",
+      "label": "售后退货",
+      "qwen_raw": "售后退货",
+      "valid": true
+    },
+    {
+      "id": "S00028",
+      "scenario": "first_message",
+      "label": "物流异常",
+      "qwen_raw": "待确认",
+      "valid": false
+    },
+    {
+      "id": "S00028",
+      "scenario": "full_conversation",
+      "label": "物流异常",
+      "qwen_raw": "物流服务",
+      "valid": false
+    },
+    {
+      "id": "S00029",
+      "scenario": "first_message",
+      "label": "退款打款",
+      "qwen_raw": "退款打款",
+      "valid": true
+    },
+    {
+      "id": "S00029",
+      "scenario": "full_conversation",
+      "label": "退款打款",
+      "qwen_raw": "退款打款",
+      "valid": true
+    },
+    {
+      "id": "S00030",
+      "scenario": "first_message",
+      "label": "其他服务",
+      "qwen_raw": "其他服务",
+      "valid": true
+    },
+    {
+      "id": "S00030",
+      "scenario": "full_conversation",
+      "label": "其他服务",
+      "qwen_raw": "其他服务",
+      "valid": true
+    },
+    {
+      "id": "S00031",
+      "scenario": "first_message",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00031",
+      "scenario": "full_conversation",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00032",
+      "scenario": "first_message",
+      "label": "订单服务",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00032",
+      "scenario": "full_conversation",
+      "label": "订单服务",
+      "qwen_raw": "退款打款",
+      "valid": true
+    },
+    {
+      "id": "S00033",
+      "scenario": "first_message",
+      "label": "物流异常",
+      "qwen_raw": "物流异常",
+      "valid": true
+    },
+    {
+      "id": "S00033",
+      "scenario": "full_conversation",
+      "label": "物流异常",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00034",
+      "scenario": "first_message",
+      "label": "订单服务",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00034",
+      "scenario": "full_conversation",
+      "label": "订单服务",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00035",
+      "scenario": "first_message",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00035",
+      "scenario": "full_conversation",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00036",
+      "scenario": "first_message",
+      "label": "产品咨询",
+      "qwen_raw": "待确认",
+      "valid": true
+    },
+    {
+      "id": "S00036",
+      "scenario": "full_conversation",
+      "label": "产品咨询",
+      "qwen_raw": "产品咨询",
+      "valid": true
+    },
+    {
+      "id": "S00037",
+      "scenario": "first_message",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00037",
+      "scenario": "full_conversation",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00039",
+      "scenario": "first_message",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00039",
+      "scenario": "full_conversation",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00040",
+      "scenario": "first_message",
+      "label": "售后退货",
+      "qwen_raw": "售后退货",
+      "valid": true
+    },
+    {
+      "id": "S00040",
+      "scenario": "full_conversation",
+      "label": "售后退货",
+      "qwen_raw": "售后退货",
+      "valid": true
+    },
+    {
+      "id": "S00041",
+      "scenario": "first_message",
+      "label": "产品咨询",
+      "qwen_raw": "产品咨询",
+      "valid": true
+    },
+    {
+      "id": "S00041",
+      "scenario": "full_conversation",
+      "label": "产品咨询",
+      "qwen_raw": "产品咨询",
+      "valid": true
+    },
+    {
+      "id": "S00042",
+      "scenario": "first_message",
+      "label": "订单服务",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00042",
+      "scenario": "full_conversation",
+      "label": "订单服务",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00044",
+      "scenario": "first_message",
+      "label": "物流异常",
+      "qwen_raw": "物流异常",
+      "valid": true
+    },
+    {
+      "id": "S00044",
+      "scenario": "full_conversation",
+      "label": "物流异常",
+      "qwen_raw": "物流异常",
+      "valid": true
+    },
+    {
+      "id": "S00045",
+      "scenario": "first_message",
+      "label": "订单服务",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00045",
+      "scenario": "full_conversation",
+      "label": "订单服务",
+      "qwen_raw": "订单服务",
+      "valid": false
+    },
+    {
+      "id": "S00046",
+      "scenario": "first_message",
+      "label": "退款打款",
+      "qwen_raw": "退款打款",
+      "valid": true
+    },
+    {
+      "id": "S00046",
+      "scenario": "full_conversation",
+      "label": "退款打款",
+      "qwen_raw": "退款打款",
+      "valid": true
+    },
+    {
+      "id": "S00047",
+      "scenario": "first_message",
+      "label": "产品咨询",
+      "qwen_raw": "售后退货",
+      "valid": true
+    },
+    {
+      "id": "S00047",
+      "scenario": "full_conversation",
+      "label": "产品咨询",
+      "qwen_raw": "产品咨询",
+      "valid": true
+    },
+    {
+      "id": "S00048",
+      "scenario": "first_message",
+      "label": "订单服务",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00048",
+      "scenario": "full_conversation",
+      "label": "订单服务",
+      "qwen_raw": "退款打款",
+      "valid": true
+    },
+    {
+      "id": "S00049",
+      "scenario": "first_message",
+      "label": "物流服务",
+      "qwen_raw": "物流服务",
+      "valid": true
+    },
+    {
+      "id": "S00049",
+      "scenario": "full_conversation",
+      "label": "物流服务",
+      "qwen_raw": "物流服务",
+      "valid": true
+    },
+    {
+      "id": "S00050",
+      "scenario": "first_message",
+      "label": "物流异常",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00050",
+      "scenario": "full_conversation",
+      "label": "物流异常",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00051",
+      "scenario": "first_message",
+      "label": "物流异常",
+      "qwen_raw": "物流异常",
+      "valid": true
+    },
+    {
+      "id": "S00051",
+      "scenario": "full_conversation",
+      "label": "物流异常",
+      "qwen_raw": "物流异常",
+      "valid": true
+    },
+    {
+      "id": "S00052",
+      "scenario": "first_message",
+      "label": "订单服务",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00052",
+      "scenario": "full_conversation",
+      "label": "订单服务",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00053",
+      "scenario": "first_message",
+      "label": "退款打款",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00053",
+      "scenario": "full_conversation",
+      "label": "退款打款",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00054",
+      "scenario": "first_message",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00054",
+      "scenario": "full_conversation",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00055",
+      "scenario": "first_message",
+      "label": "退款打款",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00055",
+      "scenario": "full_conversation",
+      "label": "退款打款",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00056",
+      "scenario": "first_message",
+      "label": "订单服务",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00056",
+      "scenario": "full_conversation",
+      "label": "订单服务",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00057",
+      "scenario": "first_message",
+      "label": "物流服务",
+      "qwen_raw": "物流服务",
+      "valid": true
+    },
+    {
+      "id": "S00057",
+      "scenario": "full_conversation",
+      "label": "物流服务",
+      "qwen_raw": "物流服务",
+      "valid": true
+    },
+    {
+      "id": "S00060",
+      "scenario": "first_message",
+      "label": "订单服务",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00060",
+      "scenario": "full_conversation",
+      "label": "订单服务",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00061",
+      "scenario": "first_message",
+      "label": "物流服务",
+      "qwen_raw": "物流服务",
+      "valid": true
+    },
+    {
+      "id": "S00061",
+      "scenario": "full_conversation",
+      "label": "物流服务",
+      "qwen_raw": "物流服务",
+      "valid": true
+    },
+    {
+      "id": "S00062",
+      "scenario": "first_message",
+      "label": "物流服务",
+      "qwen_raw": "物流服务",
+      "valid": true
+    },
+    {
+      "id": "S00062",
+      "scenario": "full_conversation",
+      "label": "物流服务",
+      "qwen_raw": "物流服务",
+      "valid": true
+    },
+    {
+      "id": "S00063",
+      "scenario": "first_message",
+      "label": "物流异常",
+      "qwen_raw": "物流异常",
+      "valid": true
+    },
+    {
+      "id": "S00063",
+      "scenario": "full_conversation",
+      "label": "物流异常",
+      "qwen_raw": "物流异常",
+      "valid": true
+    },
+    {
+      "id": "S00064",
+      "scenario": "first_message",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00064",
+      "scenario": "full_conversation",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00065",
+      "scenario": "first_message",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00065",
+      "scenario": "full_conversation",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00066",
+      "scenario": "first_message",
+      "label": "订单服务",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00066",
+      "scenario": "full_conversation",
+      "label": "订单服务",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00067",
+      "scenario": "first_message",
+      "label": "产品咨询",
+      "qwen_raw": "待确认",
+      "valid": true
+    },
+    {
+      "id": "S00067",
+      "scenario": "full_conversation",
+      "label": "产品咨询",
+      "qwen_raw": "产品咨询",
+      "valid": true
+    },
+    {
+      "id": "S00068",
+      "scenario": "first_message",
+      "label": "售后退货",
+      "qwen_raw": "售后退货",
+      "valid": true
+    },
+    {
+      "id": "S00068",
+      "scenario": "full_conversation",
+      "label": "售后退货",
+      "qwen_raw": "售后退货",
+      "valid": true
+    },
+    {
+      "id": "S00069",
+      "scenario": "first_message",
+      "label": "产品咨询",
+      "qwen_raw": "待确认",
+      "valid": true
+    },
+    {
+      "id": "S00069",
+      "scenario": "full_conversation",
+      "label": "产品咨询",
+      "qwen_raw": "产品咨询",
+      "valid": true
+    },
+    {
+      "id": "S00070",
+      "scenario": "first_message",
+      "label": "不良反应",
+      "qwen_raw": "不良反应",
+      "valid": true
+    },
+    {
+      "id": "S00070",
+      "scenario": "full_conversation",
+      "label": "不良反应",
+      "qwen_raw": "售后退货",
+      "valid": true
+    },
+    {
+      "id": "S00071",
+      "scenario": "first_message",
+      "label": "退款打款",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00071",
+      "scenario": "full_conversation",
+      "label": "退款打款",
+      "qwen_raw": "退款打款",
+      "valid": true
+    },
+    {
+      "id": "S00072",
+      "scenario": "first_message",
+      "label": "退款打款",
+      "qwen_raw": "退款打款",
+      "valid": true
+    },
+    {
+      "id": "S00072",
+      "scenario": "full_conversation",
+      "label": "退款打款",
+      "qwen_raw": "退款打款",
+      "valid": true
+    },
+    {
+      "id": "S00073",
+      "scenario": "first_message",
+      "label": "产品咨询",
+      "qwen_raw": "待确认",
+      "valid": true
+    },
+    {
+      "id": "S00073",
+      "scenario": "full_conversation",
+      "label": "产品咨询",
+      "qwen_raw": "产品咨询",
+      "valid": true
+    },
+    {
+      "id": "S00074",
+      "scenario": "first_message",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00074",
+      "scenario": "full_conversation",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00075",
+      "scenario": "first_message",
+      "label": "物流异常",
+      "qwen_raw": "物流异常",
+      "valid": true
+    },
+    {
+      "id": "S00075",
+      "scenario": "full_conversation",
+      "label": "物流异常",
+      "qwen_raw": "物流异常",
+      "valid": true
+    },
+    {
+      "id": "S00076",
+      "scenario": "first_message",
+      "label": "售后退货",
+      "qwen_raw": "售后退货",
+      "valid": true
+    },
+    {
+      "id": "S00076",
+      "scenario": "full_conversation",
+      "label": "售后退货",
+      "qwen_raw": "售后退货",
+      "valid": true
+    },
+    {
+      "id": "S00077",
+      "scenario": "first_message",
+      "label": "物流服务",
+      "qwen_raw": "物流服务",
+      "valid": true
+    },
+    {
+      "id": "S00077",
+      "scenario": "full_conversation",
+      "label": "物流服务",
+      "qwen_raw": "物流服务",
+      "valid": true
+    },
+    {
+      "id": "S00078",
+      "scenario": "first_message",
+      "label": "售后退货",
+      "qwen_raw": "待确认",
+      "valid": false
+    },
+    {
+      "id": "S00078",
+      "scenario": "full_conversation",
+      "label": "售后退货",
+      "qwen_raw": "售后退货",
+      "valid": true
+    },
+    {
+      "id": "S00079",
+      "scenario": "first_message",
+      "label": "不良反应",
+      "qwen_raw": "不良反应",
+      "valid": true
+    },
+    {
+      "id": "S00079",
+      "scenario": "full_conversation",
+      "label": "不良反应",
+      "qwen_raw": "不良反应",
+      "valid": true
+    },
+    {
+      "id": "S00080",
+      "scenario": "first_message",
+      "label": "产品咨询",
+      "qwen_raw": "待确认",
+      "valid": true
+    },
+    {
+      "id": "S00080",
+      "scenario": "full_conversation",
+      "label": "产品咨询",
+      "qwen_raw": "产品咨询",
+      "valid": true
+    },
+    {
+      "id": "S00082",
+      "scenario": "first_message",
+      "label": "不良反应",
+      "qwen_raw": "不良反应",
+      "valid": true
+    },
+    {
+      "id": "S00082",
+      "scenario": "full_conversation",
+      "label": "不良反应",
+      "qwen_raw": "不良反应",
+      "valid": true
+    },
+    {
+      "id": "S00083",
+      "scenario": "first_message",
+      "label": "产品咨询",
+      "qwen_raw": "待确认",
+      "valid": true
+    },
+    {
+      "id": "S00083",
+      "scenario": "full_conversation",
+      "label": "产品咨询",
+      "qwen_raw": "产品咨询",
+      "valid": true
+    },
+    {
+      "id": "S00084",
+      "scenario": "first_message",
+      "label": "订单服务",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00084",
+      "scenario": "full_conversation",
+      "label": "订单服务",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00085",
+      "scenario": "first_message",
+      "label": "退款打款",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00085",
+      "scenario": "full_conversation",
+      "label": "退款打款",
+      "qwen_raw": "退款打款",
+      "valid": false
+    },
+    {
+      "id": "S00086",
+      "scenario": "first_message",
+      "label": "产品咨询",
+      "qwen_raw": "待确认",
+      "valid": true
+    },
+    {
+      "id": "S00086",
+      "scenario": "full_conversation",
+      "label": "产品咨询",
+      "qwen_raw": "产品咨询",
+      "valid": true
+    },
+    {
+      "id": "S00087",
+      "scenario": "first_message",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00087",
+      "scenario": "full_conversation",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00088",
+      "scenario": "first_message",
+      "label": "物流异常",
+      "qwen_raw": "物流异常",
+      "valid": true
+    },
+    {
+      "id": "S00088",
+      "scenario": "full_conversation",
+      "label": "物流异常",
+      "qwen_raw": "物流服务",
+      "valid": true
+    },
+    {
+      "id": "S00089",
+      "scenario": "first_message",
+      "label": "不良反应",
+      "qwen_raw": "不良反应",
+      "valid": true
+    },
+    {
+      "id": "S00089",
+      "scenario": "full_conversation",
+      "label": "不良反应",
+      "qwen_raw": "售后退货",
+      "valid": true
+    },
+    {
+      "id": "S00090",
+      "scenario": "first_message",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00090",
+      "scenario": "full_conversation",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00092",
+      "scenario": "first_message",
+      "label": "产品咨询",
+      "qwen_raw": "产品咨询",
+      "valid": true
+    },
+    {
+      "id": "S00092",
+      "scenario": "full_conversation",
+      "label": "产品咨询",
+      "qwen_raw": "产品咨询",
+      "valid": true
+    },
+    {
+      "id": "S00093",
+      "scenario": "first_message",
+      "label": "物流异常",
+      "qwen_raw": "物流异常",
+      "valid": true
+    },
+    {
+      "id": "S00093",
+      "scenario": "full_conversation",
+      "label": "物流异常",
+      "qwen_raw": "物流异常",
+      "valid": true
+    },
+    {
+      "id": "S00095",
+      "scenario": "first_message",
+      "label": "会员服务",
+      "qwen_raw": "会员服务",
+      "valid": true
+    },
+    {
+      "id": "S00095",
+      "scenario": "full_conversation",
+      "label": "会员服务",
+      "qwen_raw": "会员服务",
+      "valid": true
+    },
+    {
+      "id": "S00097",
+      "scenario": "first_message",
+      "label": "订单服务",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00097",
+      "scenario": "full_conversation",
+      "label": "订单服务",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00098",
+      "scenario": "first_message",
+      "label": "不良反应",
+      "qwen_raw": "不良反应",
+      "valid": true
+    },
+    {
+      "id": "S00098",
+      "scenario": "full_conversation",
+      "label": "不良反应",
+      "qwen_raw": "售后退货",
+      "valid": true
+    },
+    {
+      "id": "S00099",
+      "scenario": "first_message",
+      "label": "物流服务",
+      "qwen_raw": "物流服务",
+      "valid": true
+    },
+    {
+      "id": "S00099",
+      "scenario": "full_conversation",
+      "label": "物流服务",
+      "qwen_raw": "物流服务",
+      "valid": true
+    },
+    {
+      "id": "S00102",
+      "scenario": "first_message",
+      "label": "售后退货",
+      "qwen_raw": "售后退货",
+      "valid": true
+    },
+    {
+      "id": "S00102",
+      "scenario": "full_conversation",
+      "label": "售后退货",
+      "qwen_raw": "售后退货",
+      "valid": true
+    },
+    {
+      "id": "S00103",
+      "scenario": "first_message",
+      "label": "订单服务",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00103",
+      "scenario": "full_conversation",
+      "label": "订单服务",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00108",
+      "scenario": "first_message",
+      "label": "物流异常",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00108",
+      "scenario": "full_conversation",
+      "label": "物流异常",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00109",
+      "scenario": "first_message",
+      "label": "产品咨询",
+      "qwen_raw": "产品咨询",
+      "valid": true
+    },
+    {
+      "id": "S00109",
+      "scenario": "full_conversation",
+      "label": "产品咨询",
+      "qwen_raw": "产品咨询",
+      "valid": true
+    },
+    {
+      "id": "S00113",
+      "scenario": "first_message",
+      "label": "产品咨询",
+      "qwen_raw": "产品咨询",
+      "valid": true
+    },
+    {
+      "id": "S00113",
+      "scenario": "full_conversation",
+      "label": "产品咨询",
+      "qwen_raw": "产品咨询",
+      "valid": true
+    },
+    {
+      "id": "S00115",
+      "scenario": "first_message",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00115",
+      "scenario": "full_conversation",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00117",
+      "scenario": "first_message",
+      "label": "订单服务",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00117",
+      "scenario": "full_conversation",
+      "label": "订单服务",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00132",
+      "scenario": "first_message",
+      "label": "售后退货",
+      "qwen_raw": "售后退货",
+      "valid": true
+    },
+    {
+      "id": "S00132",
+      "scenario": "full_conversation",
+      "label": "售后退货",
+      "qwen_raw": "售后退货",
+      "valid": true
+    },
+    {
+      "id": "S00134",
+      "scenario": "first_message",
+      "label": "产品咨询",
+      "qwen_raw": "产品咨询",
+      "valid": true
+    },
+    {
+      "id": "S00134",
+      "scenario": "full_conversation",
+      "label": "产品咨询",
+      "qwen_raw": "产品咨询",
+      "valid": true
+    },
+    {
+      "id": "S00137",
+      "scenario": "first_message",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00137",
+      "scenario": "full_conversation",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00140",
+      "scenario": "first_message",
+      "label": "产品咨询",
+      "qwen_raw": "产品咨询",
+      "valid": true
+    },
+    {
+      "id": "S00140",
+      "scenario": "full_conversation",
+      "label": "产品咨询",
+      "qwen_raw": "产品咨询",
+      "valid": true
+    },
+    {
+      "id": "S00141",
+      "scenario": "first_message",
+      "label": "订单服务",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00141",
+      "scenario": "full_conversation",
+      "label": "订单服务",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00146",
+      "scenario": "first_message",
+      "label": "售后退货",
+      "qwen_raw": "售后退货",
+      "valid": true
+    },
+    {
+      "id": "S00146",
+      "scenario": "full_conversation",
+      "label": "售后退货",
+      "qwen_raw": "售后退货",
+      "valid": true
+    },
+    {
+      "id": "S00151",
+      "scenario": "first_message",
+      "label": "产品咨询",
+      "qwen_raw": "产品咨询",
+      "valid": true
+    },
+    {
+      "id": "S00151",
+      "scenario": "full_conversation",
+      "label": "产品咨询",
+      "qwen_raw": "产品咨询",
+      "valid": true
+    },
+    {
+      "id": "S00153",
+      "scenario": "first_message",
+      "label": "补发换货",
+      "qwen_raw": "会员服务",
+      "valid": true
+    },
+    {
+      "id": "S00153",
+      "scenario": "full_conversation",
+      "label": "补发换货",
+      "qwen_raw": "会员服务",
+      "valid": true
+    },
+    {
+      "id": "S00154",
+      "scenario": "first_message",
+      "label": "不良反应",
+      "qwen_raw": "不良反应",
+      "valid": true
+    },
+    {
+      "id": "S00154",
+      "scenario": "full_conversation",
+      "label": "不良反应",
+      "qwen_raw": "不良反应",
+      "valid": true
+    },
+    {
+      "id": "S00156",
+      "scenario": "first_message",
+      "label": "售后退货",
+      "qwen_raw": "售后退货",
+      "valid": true
+    },
+    {
+      "id": "S00156",
+      "scenario": "full_conversation",
+      "label": "售后退货",
+      "qwen_raw": "售后退货",
+      "valid": true
+    },
+    {
+      "id": "S00158",
+      "scenario": "first_message",
+      "label": "售后退货",
+      "qwen_raw": "售后退货",
+      "valid": true
+    },
+    {
+      "id": "S00158",
+      "scenario": "full_conversation",
+      "label": "售后退货",
+      "qwen_raw": "售后退货",
+      "valid": true
+    },
+    {
+      "id": "S00159",
+      "scenario": "first_message",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00159",
+      "scenario": "full_conversation",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00161",
+      "scenario": "first_message",
+      "label": "售后退货",
+      "qwen_raw": "售后退货",
+      "valid": true
+    },
+    {
+      "id": "S00161",
+      "scenario": "full_conversation",
+      "label": "售后退货",
+      "qwen_raw": "售后退货",
+      "valid": true
+    },
+    {
+      "id": "S00162",
+      "scenario": "first_message",
+      "label": "售后退货",
+      "qwen_raw": "售后退货",
+      "valid": true
+    },
+    {
+      "id": "S00162",
+      "scenario": "full_conversation",
+      "label": "售后退货",
+      "qwen_raw": "售后退货",
+      "valid": true
+    },
+    {
+      "id": "S00169",
+      "scenario": "first_message",
+      "label": "产品咨询",
+      "qwen_raw": "产品咨询",
+      "valid": true
+    },
+    {
+      "id": "S00169",
+      "scenario": "full_conversation",
+      "label": "产品咨询",
+      "qwen_raw": "产品咨询",
+      "valid": true
+    },
+    {
+      "id": "S00200",
+      "scenario": "first_message",
+      "label": "退款打款",
+      "qwen_raw": "退款打款",
+      "valid": true
+    },
+    {
+      "id": "S00200",
+      "scenario": "full_conversation",
+      "label": "退款打款",
+      "qwen_raw": "退款打款",
+      "valid": true
+    },
+    {
+      "id": "S00203",
+      "scenario": "first_message",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00203",
+      "scenario": "full_conversation",
+      "label": "补发换货",
+      "qwen_raw": "补发换货",
+      "valid": true
+    },
+    {
+      "id": "S00223",
+      "scenario": "first_message",
+      "label": "售后退货",
+      "qwen_raw": "物流异常",
+      "valid": true
+    },
+    {
+      "id": "S00223",
+      "scenario": "full_conversation",
+      "label": "售后退货",
+      "qwen_raw": "物流异常",
+      "valid": true
+    },
+    {
+      "id": "S00226",
+      "scenario": "first_message",
+      "label": "订单服务",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00226",
+      "scenario": "full_conversation",
+      "label": "订单服务",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00232",
+      "scenario": "first_message",
+      "label": "售后退货",
+      "qwen_raw": "售后退货",
+      "valid": true
+    },
+    {
+      "id": "S00232",
+      "scenario": "full_conversation",
+      "label": "售后退货",
+      "qwen_raw": "售后退货",
+      "valid": true
+    },
+    {
+      "id": "S00277",
+      "scenario": "first_message",
+      "label": "售后退货",
+      "qwen_raw": "售后退货",
+      "valid": true
+    },
+    {
+      "id": "S00277",
+      "scenario": "full_conversation",
+      "label": "售后退货",
+      "qwen_raw": "物流异常",
+      "valid": true
+    },
+    {
+      "id": "S00285",
+      "scenario": "first_message",
+      "label": "售后退货",
+      "qwen_raw": "不良反应",
+      "valid": true
+    },
+    {
+      "id": "S00285",
+      "scenario": "full_conversation",
+      "label": "售后退货",
+      "qwen_raw": "售后退货",
+      "valid": true
+    },
+    {
+      "id": "S00303",
+      "scenario": "first_message",
+      "label": "产品咨询",
+      "qwen_raw": "产品咨询",
+      "valid": true
+    },
+    {
+      "id": "S00303",
+      "scenario": "full_conversation",
+      "label": "产品咨询",
+      "qwen_raw": "产品咨询",
+      "valid": true
+    },
+    {
+      "id": "S00336",
+      "scenario": "first_message",
+      "label": "退款打款",
+      "qwen_raw": "退款打款",
+      "valid": true
+    },
+    {
+      "id": "S00336",
+      "scenario": "full_conversation",
+      "label": "退款打款",
+      "qwen_raw": "退款打款",
+      "valid": true
+    },
+    {
+      "id": "S00362",
+      "scenario": "first_message",
+      "label": "退款打款",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00362",
+      "scenario": "full_conversation",
+      "label": "退款打款",
+      "qwen_raw": "退款打款",
+      "valid": true
+    },
+    {
+      "id": "S00381",
+      "scenario": "first_message",
+      "label": "退款打款",
+      "qwen_raw": "订单服务",
+      "valid": true
+    },
+    {
+      "id": "S00381",
+      "scenario": "full_conversation",
+      "label": "退款打款",
+      "qwen_raw": "退款打款",
+      "valid": true
+    },
+    {
+      "id": "S00474",
+      "scenario": "first_message",
+      "label": "产品咨询",
+      "qwen_raw": "产品咨询",
+      "valid": true
+    },
+    {
+      "id": "S00474",
+      "scenario": "full_conversation",
+      "label": "产品咨询",
+      "qwen_raw": "产品咨询",
+      "valid": true
+    }
+  ]
+}

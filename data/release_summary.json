@@ -1,8 +1,6 @@
 {
-  "version": "1.1.0-rc1",
+  "version": "1.2.0-rc1",
   "date": "2026-09-07",
-  "code_revision": "d1107b6+working-tree",
-  "dataset_hash": "sha256:302db6cdc5517a6d883a4d5244815369a85ac0c32a23496f3ab4002c6b2d8673",
   "official_dataset": {
     "sessions": 138,
     "messages": 998,
@@ -11,7 +9,6 @@
   },
   "model": "qwen3.7-flash-2026-07-15",
   "online_source": {
-    "evaluated_commit": "60c6be9d23d7b832853adec7b4f7381c891bf33d",
     "responses": 276,
     "valid_responses": 270,
     "note": "保存的真实 Qwen 输出按当前规则/Hybrid 意图决策离线重放；未再次发起网络调用"
@@ -492,7 +489,7 @@
     "unsafe_commitment_recall": 1.0,
     "safe_reply_false_positive_rate": 0.0
   },
-  "python_test_count": 48,
-  "browser_check_count": 21,
+  "python_test_count": 50,
+  "browser_check_count": 22,
   "artifacts_note": "生成交付物前以本文件为唯一版本与指标来源"
 }

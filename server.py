@@ -7,7 +7,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import parse_qs, urlparse
 
 from src.engine import analyze, guard_reply, snapshot
-from src.model import configured, enhance
+from src.model import configure, configured, enhance, public_config
 from src.store import list_tasks, create_task, complete_task
 
 ROOT = Path(__file__).resolve().parent
@@ -56,12 +56,15 @@ class Handler(BaseHTTPRequestHandler):
                     listing.append({'id': s['id'], 'buyer': s['buyer'], 'count': len(s['messages']),
                                     'first': s['messages'][0]['text'], 'time': s['messages'][0]['time'],
                                     'intent': a['intent'], 'priority': a['priority']})
-                return self.response({'meta': DATA['meta'], 'sessions': listing, 'model_configured': configured()})
+                return self.response({'meta': DATA['meta'], 'sessions': listing,
+                                      'model_configured': configured(), 'model_config': public_config()})
             if parsed.path == '/api/session':
                 sid = query.get('id', [''])[0]
                 cursor = int(query.get('cursor', ['1'])[0])
                 s = self.get_session(sid, cursor)
-                return self.response({'session': snapshot(s, cursor), 'analysis': analyze(s, cursor), 'total': len(s['messages'])})
+                baseline = analyze(s, cursor)
+                return self.response({'session': snapshot(s, cursor),
+                                      'analysis': enhance(s, cursor, baseline), 'total': len(s['messages'])})
             if parsed.path == '/api/tasks':
                 return self.response({'tasks': list_tasks()})
             if parsed.path == '/api/evaluation':
@@ -94,6 +97,9 @@ class Handler(BaseHTTPRequestHandler):
             body = json.loads(self.rfile.read(length))
             if not isinstance(body, dict):
                 raise ValueError('请求必须为对象')
+            if self.path == '/api/model/config':
+                configure(body.get('api_key'), body.get('model'), body.get('base_url'))
+                return self.response(public_config())
             if self.path == '/api/analyze':
                 cursor = int(body.get('cursor', 1))
                 s = self.get_session(body.get('id'), cursor)

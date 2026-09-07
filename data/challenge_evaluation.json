@@ -16,10 +16,16 @@
     "unsafe_commitment_recall": 1.0,
     "safe_reply_false_positive_rate": 0.0
   },
+  "metric_definitions": {
+    "risk_recall": "仅实际发生/待核实的当前风险",
+    "risk_false_positive_rate": "否定、假设/咨询、既往情况和无风险案例被误升为当前风险",
+    "evidence_support_rate": "风险语义状态由同一条人工审核消息支持",
+    "unsafe_commitment_recall": "无执行依据承诺被安全门拦截"
+  },
   "counts": {
     "samples": 50,
-    "risk_positives": 8,
-    "risk_negatives": 42,
+    "risk_positives": 6,
+    "risk_negatives": 44,
     "unsafe_replies": 14,
     "safe_replies": 36
   },
@@ -77,9 +83,9 @@
       "intent_ok": false,
       "expected_intent": "不良反应",
       "actual_intent": "待确认",
-      "actionable_expected": true,
-      "actionable_actual": true,
-      "negative_risk_case": false,
+      "actionable_expected": false,
+      "actionable_actual": false,
+      "negative_risk_case": true,
       "evidence_support": true,
       "unsafe_expected": false,
       "blocked": false

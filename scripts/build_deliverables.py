@@ -117,18 +117,18 @@ def main():
         ('编辑回复','建议可采用、可修改，模拟发送。'),('人工确认任务','客服检查标题与说明后再保存。'),('本地闭环','SQLite 持久化、相同任务去重、标记完成。')],'未连接真实千牛、物流或支付系统；任务动作不等同于真实退款/补发。')
 
     s=slides[6]; title(s,7,'Agent 设计：证据在前，行动由人确认。','技术实现 / 受控的分步工作流')
-    workflow=[('01  数据关联','聊天 / 订单 / 工单\n会话 ID + 来源行号'),('02  时点门控','历史回放 / 归档快照\n隔离未来信息'),('03  风险扫描','主诉 / 情绪 / 风险\n可离线规则基线'),('04  Qwen（可选）','最小上下文语义分析\n服务端配置与按需触发'),('05  输出校验','JSON + 引用 ID 校验\n失败时显式降级'),('06  人工闭环','可编辑建议 / 确认任务\n无外部自动执行')]
+    workflow=[('01  数据关联','聊天 / 订单 / 工单\n会话 ID + 来源行号'),('02  时点门控','历史回放 / 归档快照\n隔离未来信息'),('03  风险证据','semantic_state + evidence\n否定/假设不升级'),('04  默认 Hybrid','Qwen 语义 + 业务规则\n界面内存配置'),('05  安全校验','JSON + 引用 + 回复承诺\n失败时安全回退'),('06  人工闭环','可编辑建议 / 确认任务\n无外部自动执行')]
     for i,(head,body) in enumerate(workflow):
         x=.8+(i%3)*4.06;y=2.12+(i//3)*1.85
         rect(s,x,y,3.8,1.56);text(s,x+.2,y+.18,3.4,.38,head,18,TEAL,True);text(s,x+.2,y+.72,3.4,.7,body,14,MUTED)
     foot(s,'技术栈：Python 标准库 HTTP + 原生 HTML/CSS/JS + SQLite；Qwen 使用兼容 API。详见 AGENT_DESIGN.md。')
 
-    s=slides[7]; title(s,8,'大模型用于理解，业务边界由流程守住。','技术实现 / 可选 Qwen 接入与成本设计')
+    s=slides[7]; title(s,8,'默认 Hybrid 理解语义，证据规则守住边界。','技术实现 / Qwen + Hybrid 默认流程与安全回退')
     for i,(head,body) in enumerate([
         ('输入最小化','仅发送当前可见会话与必要订单/工单字段，不发送整个工作簿。'),
         ('输出可复核','强制 JSON，检查字段、枚举与证据 ID；有效 ID 仍不等于语义充分支持。'),
         ('低成本运行','上下文哈希缓存，最多 256 条；命中不重复请求。只显示实际返回的 tokens。'),
-        ('失败可理解','超时或结果不合法时保留规则结果，显示降级原因；密钥不进入前端。')]):
+        ('失败可理解','未配置、超时或结果不合法时显示“已安全回退”；密钥仅存服务内存。')]):
         x=.8+(i%2)*6.1;y=2.13+(i//2)*1.85
         rect(s,x,y,5.82,1.62);text(s,x+.22,y+.2,5.3,.42,head,19,TEAL,True);text(s,x+.22,y+.76,5.3,.71,body,15,MUTED)
     foot(s,'已保存 276 个真实 Qwen 评测场景；冲刺版使用保存输出离线重放，仍无真实业务提升或生产泛化结论。')
@@ -139,14 +139,14 @@ def main():
     for i,(num,lab) in enumerate([(f"{dev['first_message']['hybrid']['accuracy']:.1%}",'Hybrid 首条意图'),(f"{dev['full_conversation']['hybrid']['accuracy']:.1%}",'Hybrid 完整会话'),(f"{challenge['unsafe_commitment_recall']:.0%}",'危险承诺拦截召回')]):
         x=.8+i*4.05;rect(s,x,2.12,3.8,1.48);text(s,x+.23,2.25,3.3,.7,num,35,TEAL,True);text(s,x+.23,3.04,3.3,.36,lab,15,MUTED)
     text(s,.85,3.93,5.65,1.96,f"官方 138 会话：Rules {dev['first_message']['rules']['accuracy']:.1%}\nQwen {dev['first_message']['qwen']['accuracy']:.1%} / Hybrid {dev['first_message']['hybrid']['accuracy']:.1%}\n保存的真实 Qwen 输出按当前决策重放\n标签不进入在线推断",17)
-    text(s,7.1,3.93,5.25,2.0,f"Challenge Set（50 条）\nIntent {challenge['intent_accuracy']:.1%} · Risk Recall {challenge['risk_recall']:.0%}\nEvidence Support {challenge['evidence_support_rate']:.0%}\n小型边界回归，不代表生产泛化。",16,MUTED)
+    text(s,7.1,3.93,5.25,2.0,f"Challenge Set（50 条，Rules + Safety Gate）\nIntent {challenge['intent_accuracy']:.1%} · Risk Recall {challenge['risk_recall']:.0%}\nEvidence Support {challenge['evidence_support_rate']:.0%}\n小型边界回归，不代表生产泛化。",16,MUTED)
     foot(s,'统一指标来源：data/release_summary.json；详见 docs/EVALUATION.md 与 CHALLENGE_EVALUATION.md。')
 
     s=slides[9]; title(s,10,'能跑、能核实，也能交接。','项目交付 / 在真实浏览器验证完整操作链路')
     rect(s,.8,2.1,5.7,3.75);text(s,1.05,2.36,5.1,.55,'已交付',23,TEAL,True)
     text(s,1.05,3.06,5.1,2.5,'可运行的三栏工作台\n源码与原始/导入数据\nAgent 设计与运行指南\n官方模板 PPT + 实际操作录屏\n可重跑规则评估与测试',18)
     rect(s,6.8,2.1,5.7,3.75);text(s,7.05,2.36,5.1,.55,'验证证据',23,TEAL,True)
-    text(s,7.05,3.06,5.1,2.5,f"{release['python_test_count']} 项 Python 单元 / API 测试\n{release['browser_check_count']} 项真实 Edge 浏览器检查\n320～1440 px 无页面横向溢出\n控制台错误：0\n模型缺钥时明确降级",18)
+    text(s,7.05,3.06,5.1,2.5,f"{release['python_test_count']} 项 Python 单元 / API 测试\n{release['browser_check_count']} 项真实 Edge 浏览器检查\n320～1440 px 无页面横向溢出\n控制台错误：0\n默认 Hybrid；失败时安全回退",18)
     foot(s,'验证针对本地 Demo；不能替代真实模型、真实千牛接入、安全审计或生产负载测试。')
 
     s=slides[10]; title(s,11,'把“可能有用”，推进到“证明确实有用”。','未来完善方向 / 价值假设与验证路线')

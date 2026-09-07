@@ -22,11 +22,12 @@ python server.py --port 8765
 - **归档快照**显式展示官方表格最终订单、工单与历史对话，支持事后复盘；不把归档记录伪装成实时信息。
 - 回复建议可编辑、可本地模拟发送；跟进任务人工确认后保存到 SQLite，重复创建自动去重，可标记完成。
 - 当前快照导出 JSON；统计看板与可重跑的规则评估。
-- 可选 Qwen 兼容 API：服务端密钥、最小上下文、JSON 校验、证据 ID 校验、256 条内存缓存、实际 token 与延迟显示、失败显式降级。
+- 默认 Qwen + Hybrid：最小上下文、JSON 与证据校验、语义风险门控、内存缓存、实际 token 与延迟显示；未配置、调用失败或校验失败时明确显示“已安全回退”。
+- 顶栏提供 Qwen 配置入口。API Key 只保存在服务进程内存，不写入浏览器存储、文件或日志，服务重启后清除。
 
-## Qwen 配置（可选）
+## Qwen + Hybrid 配置
 
-在一个新的 PowerShell 窗口设置实际环境变量后启动服务。`.env.example` 仅为说明，本项目不会自动读取 `.env`。
+启动后点击顶栏 **配置 Qwen**，填写 API Key、模型和兼容 API 地址即可启用默认 Hybrid 流程。也可在 PowerShell 中设置环境变量后启动；`.env.example` 仅为说明，项目不会自动读取 `.env`。
 
 ```powershell
 $env:DASHSCOPE_API_KEY = '在本机填写您自己的密钥'
@@ -35,13 +36,11 @@ $env:QWEN_BASE_URL = 'https://dashscope.aliyuncs.com/compatible-mode/v1'
 python server.py --port 8766
 ```
 
-打开相应端口，点击右侧底部 **Qwen 分析**。地域/业务空间地址以您的阿里云控制台为准。启动时不自动调用模型；点击才触发请求。不要将密钥写入源码或提交包。
-
-已完成真实 Qwen API 调用及原适配器离线回放复核，在线评测结果见下文。接口可用不代表所有输出都能通过校验；失败时仍按现有逻辑回退规则分析。
+地域与业务空间地址以阿里云控制台为准。配置完成后，会话分析默认调用 Qwen + Hybrid；右侧“重新分析”可手动重试。不要将密钥写入源码或提交包。接口不可用或输出不合法时，规则只作为最差兜底，并明确标识“已安全回退”。
 
 ## 数据与评估
 
-原始 XLSX、DOCX、PPT 模板保留在根目录。全部为官方虚构 MOCK 数据。原图文件未提供，页面仅提示图片缺失，不执行或伪装图像识别。
+原始 XLSX、DOCX、PPT 模板保留在开发仓库。全部为官方虚构 MOCK 数据。原图文件未提供，页面仅提示图片缺失，不执行或伪装图像识别。
 
 ### 在线实测结果（2026-09-06）
 
@@ -60,9 +59,9 @@ python server.py --port 8766
 
 ### 评测边界与复现
 
-数据为官方同源 MOCK 开发数据，**不是独立测试集，也不代表生产环境泛化**。另建的 50 条人工审核 Challenge Set 与官方数据分开保存：Intent 88.00%，Risk Recall 100.00%、Risk False Positive 0.00%、Evidence Support 100.00%、Unsafe Commitment Recall 100.00%、安全回复误拦截 0.00%。这些是小型边界回归结果，不是生产结论。详见 [Challenge Set 报告](docs/CHALLENGE_EVALUATION.md)。
+数据为官方同源 MOCK 开发数据，**不是独立测试集，也不代表生产环境泛化**。另建的 50 条人工审核 Challenge Set 与官方数据分开保存，当前报告针对 Rules + Safety Gate（未调用 Qwen）：Intent 88.00%，Risk Recall 100.00%、Risk False Positive 0.00%、Evidence Support 100.00%、Unsafe Commitment Recall 100.00%、安全回复误拦截 0.00%。这些是小型边界回归结果，不是生产结论。详见 [Challenge Set 报告](docs/CHALLENGE_EVALUATION.md)。
 
-详见 [在线评测报告](docs/ONLINE_EVALUATION.md)、[低分原因分析](docs/ONLINE_EVALUATION_ANALYSIS.md) 和 [评测数据](data/online_evaluation_v2.json)。
+详见 [在线评测报告](docs/ONLINE_EVALUATION.md) 和用于复核指标的精简记录 `data/qwen_evaluation_summary.json`。原始请求、失败尝试与开发分析不进入比赛提交包。
 
 以下命令重跑规则评估和项目测试，不发起在线模型调用：
 
@@ -88,7 +87,7 @@ python scripts/build_deliverables.py
 - docs/AGENT_DESIGN.md：Agent 工作流、接口与边界。
 - docs/DEMO_SCRIPT.md：讲解稿与演示步骤。
 - docs/EVALUATION.md、docs/CHALLENGE_EVALUATION.md、deliverables/browser-checks.json：评估与验证记录。
-- data/release_summary.json：版本、数据哈希、Rules/Qwen/Hybrid 指标与测试数量的统一来源。
+- data/release_summary.json：版本、Rules/Qwen/Hybrid 指标与测试数量的统一来源。
 
 ## 后续待完成事项
 
