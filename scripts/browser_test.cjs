@@ -47,11 +47,10 @@ const wait = async (page, ms=3500) => { if (record) await page.waitForTimeout(ms
   await page.getByRole('heading',{name:'不良反应工单创建'}).waitFor();
   results.push('late ticket appears in explicitly labelled archive mode');
   await page.screenshot({path:path.join(out,'03-journey.png')});await wait(page,6000);
-  await page.getByRole('tab',{name:'证据与流程'}).click();await wait(page,5500);
-  await page.getByRole('button',{name:'回到对话 ↗'}).first().click();
+  await page.getByRole('tab',{name:'即时洞察'}).click();
+  await page.getByRole('button',{name:'回到对话',exact:false}).first().click();
   assert.equal(await page.locator('.message-highlight').count(),1);results.push('evidence jump highlights source');await wait(page);
   await page.screenshot({path:path.join(out,'04-evidence.png')});
-  await page.getByRole('tab',{name:'即时洞察'}).click();
   await page.getByRole('button',{name:'采用建议 ↙'}).click();
   assert.ok((await page.getByRole('textbox',{name:'回复草稿'}).inputValue()).length>20);
   await page.getByRole('textbox',{name:'回复草稿'}).fill('理解您希望尽快处理的心情。我会整理您已经提供的信息交给专员核实，后续有进展再向您反馈。');await wait(page,6000);

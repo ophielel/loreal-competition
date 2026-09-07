@@ -88,8 +88,8 @@
   "initial_baseline_accuracy": 0.42028985507246375,
   "full_conversation_accuracy": 0.9202898550724637,
   "abstentions": 21,
-  "latency_mean_ms": 0.044318114490032305,
-  "latency_p95_ms": 0.041399995097890496,
+  "latency_mean_ms": 0.04411086906591241,
+  "latency_p95_ms": 0.04189999890513718,
   "errors": [
     {
       "id": "S00002",
